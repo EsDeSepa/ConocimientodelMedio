@@ -26,53 +26,24 @@
             android:id="@+id/title_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Inicia sesión"
+            android:text="LOGO"
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/login_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <EditText
-            android:id="@+id/username_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/baseline_person_24"
-            android:hint="Nombre de usuario" />
-
-        <EditText
-            android:id="@+id/password_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Contraseña"
-            android:drawableLeft="@drawable/baseline_password_24"
-            android:inputType="textPassword" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="5dp" />
-
-        <TextView
-            android:id="@+id/register_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:linksClickable="true"
-            android:gravity="center"
-            android:text="¿No tienes cuenta? Regístrate" />
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="30dp" />
 
         <Button
-            android:id="@+id/login_button"
+            android:id="@+id/start_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Iniciar sesión" />
+            android:text="Comenzar" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
