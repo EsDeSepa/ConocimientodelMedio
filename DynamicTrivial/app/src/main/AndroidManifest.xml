@@ -11,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DynamicTrivial"
         tools:targetApi="31">
-        <activity android:name=".StartupActivity"
+
+        <activity
+            android:name=".DiceSensorActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.DynamicTrivial">
@@ -20,13 +22,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".RegisterActivity"
+            android:name=".DiceActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.DynamicTrivial">
+        </activity>
+
+        <activity android:name=".StartupActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.DynamicTrivial">
 
         </activity>
+
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.DynamicTrivial">
+        </activity>
+
         <activity
             android:name=".LoginActivity"
             android:exported="true"
@@ -34,6 +51,9 @@
             android:theme="@style/Theme.DynamicTrivial">
 
         </activity>
+
+
+
     </application>
 
 </manifest>
