@@ -23,7 +23,6 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
     Button rollButton;
     Boolean pressed;
 
-    //
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
