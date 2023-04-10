@@ -44,6 +44,24 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Comenzar" />
+        <Button
+            android:id="@+id/dice_sensor_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Dado sensor" />
+        <Button
+            android:id="@+id/dice_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Dado" />
+        <Button
+            android:id="@+id/order_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Orden" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

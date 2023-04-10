@@ -28,6 +28,40 @@ public class StartupActivity extends AppCompatActivity {
                 finish();
             }
         });
+        Button diceSensorButton = (Button) findViewById(R.id.dice_sensor_button);
+        diceSensorButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // do something when the TextView is clicked
+                Intent intent = new Intent(StartupActivity.this, DiceSensorActivity.class);
+                startActivity(intent);
+
+            }
+        });
+        Button diceButton = (Button) findViewById(R.id.dice_button);
+        diceButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // do something when the TextView is clicked
+                Intent intent = new Intent(StartupActivity.this, DiceActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        Button orderButton = (Button) findViewById(R.id.order_button);
+        orderButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // do something when the TextView is clicked
+                Intent intent = new Intent(StartupActivity.this, OrderActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
     }
 }
