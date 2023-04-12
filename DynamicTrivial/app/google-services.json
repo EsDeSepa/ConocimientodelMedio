@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "589707212748",
+    "project_id": "dynamic-trivia",
+    "storage_bucket": "dynamic-trivia.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589707212748:android:6801d12b463835b2668f69",
+        "android_client_info": {
+          "package_name": "com.example.dynamictrivial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589707212748-iqke10a2nldbudrl2dvn5hbi5vmhka87.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCie7ad2w6RByz8cUDCMMFViQBh5uvpoWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "589707212748-iqke10a2nldbudrl2dvn5hbi5vmhka87.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
