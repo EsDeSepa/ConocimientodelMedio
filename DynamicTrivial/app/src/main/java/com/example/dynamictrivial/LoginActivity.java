@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         txtemail = findViewById(R.id.email_login_edittext);
         txtpassoword = findViewById(R.id.password_login_edittext);
         login_btn = findViewById(R.id.login_button);
-
+        mAuth = FirebaseAuth.getInstance();
 
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
