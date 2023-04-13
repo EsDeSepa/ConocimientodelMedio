@@ -38,14 +38,14 @@
             android:layout_height="20dp" />
 
         <EditText
-            android:id="@+id/username_edittext"
+            android:id="@+id/email_login_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/baseline_person_24"
             android:hint="@string/hint_username" />
 
         <EditText
-            android:id="@+id/password_edittext"
+            android:id="@+id/password_login_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_password"
