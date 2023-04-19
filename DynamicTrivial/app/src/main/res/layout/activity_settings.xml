@@ -1,55 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background">
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- Scroll view -->
-    <ScrollView
+
+    <!-- Vertical layout for settings -->
+    <LinearLayout
+        android:id="@+id/switches_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:background="@drawable/layout_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Vertical layout for settings -->
-        <LinearLayout
-            android:layout_width="match_parent"
+
+        <TextView
+            android:id="@+id/title_textview"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="Ajustes del juego"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@+id/switches_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Toggle setting -->
-            <Switch
-                android:id="@+id/toggle_setting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="etiqueta" />
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
-            <!-- Text input setting -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="etiqueta input" />
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Switch 1" />
 
-            <EditText
-                android:id="@+id/text_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
+        <Switch
+            android:id="@+id/switch2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Switch 2" />
 
-            <!-- Selection setting -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="etiqueta seleccion" />
+        <Switch
+            android:id="@+id/switch3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Switch 3" />
 
+        <Switch
+            android:id="@+id/switch4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Switch 4" />
 
+        <Switch
+            android:id="@+id/switch5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Switch 5" />
 
-        </LinearLayout>
+        <Switch
+            android:id="@+id/switch6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Switch 6" />
 
-    </ScrollView>
+        <Switch
+            android:id="@+id/switch7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Switch 7" />
+
+        <Switch
+            android:id="@+id/switch8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Switch 8" />
+
+    </LinearLayout>
+
 
     <!-- Save button -->
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
