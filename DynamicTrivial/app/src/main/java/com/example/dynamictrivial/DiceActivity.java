@@ -1,6 +1,7 @@
 package com.example.dynamictrivial;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +36,8 @@ public class DiceActivity extends AppCompatActivity {
             if(!pressed) {
                     rollDice();
                     pressed = true;
+                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_sound);
+                    mediaPlayer.start();
                 }
             }
         });

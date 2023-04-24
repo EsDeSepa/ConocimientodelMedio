@@ -14,9 +14,6 @@ public class SettingsActivity extends AppCompatActivity {
     private Switch switch3;
     private Switch switch4;
     private Switch switch5;
-    private Switch switch6;
-    private Switch switch7;
-    private Switch switch8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +21,11 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         // Obtenemos las referencias a los Switches del layout
-        switch1 = findViewById(R.id.switch1);
-        switch2 = findViewById(R.id.switch2);
-        switch3 = findViewById(R.id.switch3);
-        switch4 = findViewById(R.id.switch4);
-        switch5 = findViewById(R.id.switch5);
-        switch6 = findViewById(R.id.switch6);
-        switch7 = findViewById(R.id.switch7);
-        switch8 = findViewById(R.id.switch8);
+        switch1 = findViewById(R.id.cat1);
+        switch2 = findViewById(R.id.cat2);
+        switch3 = findViewById(R.id.cat3);
+        switch4 = findViewById(R.id.cat4);
+        switch5 = findViewById(R.id.cat5);
 
         // Agregamos un listener a cada Switch
         switch1.setOnCheckedChangeListener(switchListener);
@@ -39,9 +33,6 @@ public class SettingsActivity extends AppCompatActivity {
         switch3.setOnCheckedChangeListener(switchListener);
         switch4.setOnCheckedChangeListener(switchListener);
         switch5.setOnCheckedChangeListener(switchListener);
-        switch6.setOnCheckedChangeListener(switchListener);
-        switch7.setOnCheckedChangeListener(switchListener);
-        switch8.setOnCheckedChangeListener(switchListener);
     }
 
     private CompoundButton.OnCheckedChangeListener switchListener = new CompoundButton.OnCheckedChangeListener() {
@@ -57,29 +48,20 @@ public class SettingsActivity extends AppCompatActivity {
 
             // Dependiendo del Switch que cambió, mostramos un mensaje diferente
             switch (switchId) {
-                case R.id.switch1:
+                case R.id.cat1:
                     message = isChecked ? "Switch 1 activado" : "Switch 1 desactivado";
                     break;
-                case R.id.switch2:
+                case R.id.cat2:
                     message = isChecked ? "Switch 2 activado" : "Switch 2 desactivado";
                     break;
-                case R.id.switch3:
+                case R.id.cat3:
                     message = isChecked ? "Switch 3 activado" : "Switch 3 desactivado";
                     break;
-                case R.id.switch4:
+                case R.id.cat4:
                     message = isChecked ? "Switch 4 activado" : "Switch 4 desactivado";
                     break;
-                case R.id.switch5:
+                case R.id.cat5:
                     message = isChecked ? "Switch 5 activado" : "Switch 5 desactivado";
-                    break;
-                case R.id.switch6:
-                    message = isChecked ? "Switch 6 activado" : "Switch 6 desactivado";
-                    break;
-                case R.id.switch7:
-                    message = isChecked ? "Switch 7 activado" : "Switch 7 desactivado";
-                    break;
-                case R.id.switch8:
-                    message = isChecked ? "Switch 8 activado" : "Switch 8 desactivado";
                     break;
                 default:
                     message = "Switch desconocido";
