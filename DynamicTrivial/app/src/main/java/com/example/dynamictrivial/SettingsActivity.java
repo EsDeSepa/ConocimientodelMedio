@@ -6,7 +6,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+/*
 public class SettingsActivity extends AppCompatActivity {
 
     private Switch switch1;
@@ -72,3 +72,4 @@ public class SettingsActivity extends AppCompatActivity {
         }
     };
 }
+*/
