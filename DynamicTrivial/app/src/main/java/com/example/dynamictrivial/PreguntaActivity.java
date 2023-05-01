@@ -1,5 +1,6 @@
 package com.example.dynamictrivial;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,95 +26,59 @@ import java.util.Random;
 
 public class PreguntaActivity extends AppCompatActivity {
 
-    private TextView preguntaTextView;
-    private RadioGroup opcionesRadioGroup;
-    private Button responderButton;
-
-    private Pregunta preguntaActual;
-    private List<Pregunta> listaPreguntas;
+    private TextView tvPregunta;
+    private RadioGroup radioGroupOpciones;
+    private Button btnResponder;
+    private List<String> opciones;
+    private int respuesta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pregunta);
 
-        preguntaTextView = findViewById(R.id.tv_pregunta);
-        opcionesRadioGroup = findViewById(R.id.rg_opciones);
-        responderButton = findViewById(R.id.btn_responder);
+        // Obtener los datos de la pregunta seleccionada
+        Intent intent = getIntent();
+        Pregunta pregunta = intent.getParcelableExtra("pregunta");
 
-        // Obtener la lista de preguntas de la categoría seleccionada
-        String categoria = getIntent().getStringExtra("CATEGORIA");
-        listaPreguntas = obtenerPreguntasDeCategoria(categoria);
+        // Obtener las vistas del layout
+        tvPregunta = findViewById(R.id.tv_pregunta);
+        radioGroupOpciones = findViewById(R.id.radio_group_opciones);
+        btnResponder = findViewById(R.id.btn_responder);
 
-        // Obtener una pregunta aleatoria de la lista
-        preguntaActual = obtenerPreguntaAleatoria(listaPreguntas);
-
-        // Mostrar la pregunta en el TextView
-        preguntaTextView.setText(preguntaActual.getPregunta());
-
-        // Agregar las opciones de respuesta como RadioButtons
-        List<String> opciones = preguntaActual.getOpciones();
+        // Mostrar la pregunta y opciones en las vistas correspondientes
+        tvPregunta.setText(pregunta.getPregunta());
+        opciones = pregunta.getOpciones();
+        respuesta = pregunta.getRespuesta();
         for (int i = 0; i < opciones.size(); i++) {
             RadioButton radioButton = new RadioButton(this);
             radioButton.setText(opciones.get(i));
-            opcionesRadioGroup.addView(radioButton);
+            radioGroupOpciones.addView(radioButton);
         }
 
-        // Manejar el click del botón Responder
-        responderButton.setOnClickListener(new View.OnClickListener() {
+        // Definir el comportamiento del botón de responder
+        btnResponder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int respuestaSeleccionada = opcionesRadioGroup.getCheckedRadioButtonId();
-                int respuestaCorrecta = preguntaActual.getRespuesta();
-                if (respuestaSeleccionada == -1) {
-                    Toast.makeText(getApplicationContext(), "Selecciona una opción", Toast.LENGTH_SHORT).show();
-                } else if (respuestaSeleccionada == opcionesRadioGroup.getChildAt(respuestaCorrecta - 1).getId()) {
-                    Toast.makeText(getApplicationContext(), "¡Respuesta correcta!", Toast.LENGTH_SHORT).show();
+                // Obtener la opción seleccionada
+                int opcionSeleccionada = radioGroupOpciones.getCheckedRadioButtonId();
+                if (opcionSeleccionada == -1) {
+                    // Si no se ha seleccionado ninguna opción, mostrar un mensaje
+                    Toast.makeText(PreguntaActivity.this, "Debes seleccionar una opción", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Respuesta incorrecta", Toast.LENGTH_SHORT).show();
-                }
-                // Obtener una nueva pregunta aleatoria y mostrarla
-                preguntaActual = obtenerPreguntaAleatoria(listaPreguntas);
-                preguntaTextView.setText(preguntaActual.getPregunta());
-                opcionesRadioGroup.removeAllViews();
-                List<String> opciones = preguntaActual.getOpciones();
-                for (int i = 0; i < opciones.size(); i++) {
-                    RadioButton radioButton = new RadioButton(getApplicationContext());
-                    radioButton.setText(opciones.get(i));
-                    opcionesRadioGroup.addView(radioButton);
+                    // Si se ha seleccionado una opción, verificar si es la respuesta correcta
+                    int opcionSeleccionadaIndex = radioGroupOpciones.indexOfChild(findViewById(opcionSeleccionada));
+                    if (opcionSeleccionadaIndex == respuesta) {
+                        // Si es la respuesta correcta, mostrar un mensaje y cerrar la actividad
+                        Toast.makeText(PreguntaActivity.this, "¡Respuesta correcta!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        // Si no es la respuesta correcta, mostrar un mensaje
+                        Toast.makeText(PreguntaActivity.this, "Respuesta incorrecta, intenta de nuevo", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
     }
-
-    // Obtener la lista de preguntas de una categoría
-    private List<Pregunta> obtenerPreguntasDeCategoria(String categoria) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("preguntas");
-        Query query = ref.orderByChild("categoria").equalTo(categoria);
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<Pregunta> preguntas = new ArrayList<>();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Pregunta pregunta = dataSnapshot.getValue(Pregunta.class);
-                    preguntas.add(pregunta);
-                }
-                listaPreguntas = preguntas;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-        query.addListenerForSingleValueEvent(eventListener);
-        return listaPreguntas;
-    }
-
-    // Obtener una pregunta aleatoria de una lista
-    private Pregunta obtenerPreguntaAleatoria(List<Pregunta> preguntas) {
-        Random random = new Random();
-        int indiceAleatorio = random.nextInt(preguntas.size());
-        return preguntas.get(indiceAleatorio);
-    }
 }
+

@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,72 +33,83 @@ import java.util.Random;
 
 public class DondeCaiActivity extends AppCompatActivity {
 
-    private DatabaseReference dbRef;
+    private DatabaseReference categoriasRef;
+    private List<String> categoriasList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.donde_cai);
 
-        dbRef = FirebaseDatabase.getInstance().getReference();
-
-        // Obtener referencias a los elementos de la interfaz de usuario
-        TextView tvCategorias = findViewById(R.id.tvCategorias);
-        ListView lvCategorias = findViewById(R.id.listViewCategorias);
-
-        // Obtener las categorías de la base de datos y mostrarlas en la interfaz de usuario
-        dbRef.child("categorias").addListenerForSingleValueEvent(new ValueEventListener() {
+        categoriasRef = FirebaseDatabase.getInstance().getReference().child("categorias");
+        categoriasRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<String> categorias = new ArrayList<>();
-                for (DataSnapshot categoriaSnapshot : snapshot.getChildren()) {
-                    String categoria = categoriaSnapshot.getKey();
-                    categorias.add(categoria);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                categoriasList.clear();
+                for (DataSnapshot categoriaSnapshot : dataSnapshot.getChildren()) {
+                    String categoriaNombre = categoriaSnapshot.getKey();
+                    categoriasList.add(categoriaNombre);
                 }
-                ArrayAdapter<String> categoriasAdapter = new ArrayAdapter<>(DondeCaiActivity.this, android.R.layout.simple_list_item_1, categorias);
-                lvCategorias.setAdapter(categoriasAdapter);
+                createButtons();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("DondeCaiActivity", "Error al obtener categorías de la base de datos", error.toException());
-            }
-        });
-
-        // Configurar el listener de clic en un elemento de la lista de categorías
-        lvCategorias.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String categoriaSeleccionada = (String) parent.getItemAtPosition(position);
-
-                // Obtener una pregunta aleatoria de la categoría seleccionada
-                dbRef.child("preguntas").child(categoriaSeleccionada).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ArrayList<Pregunta> preguntas = new ArrayList<>();
-                        for (DataSnapshot preguntaSnapshot : snapshot.getChildren()) {
-                            Pregunta pregunta = preguntaSnapshot.getValue(Pregunta.class);
-                            preguntas.add(pregunta);
-                        }
-
-                        // Seleccionar una pregunta aleatoria
-                        Random random = new Random();
-                        Pregunta preguntaSeleccionada = preguntas.get(random.nextInt(preguntas.size()));
-
-                        // Mostrar la pregunta en una nueva actividad
-                        Intent intent = new Intent(DondeCaiActivity.this, PreguntaActivity.class);
-                        intent.putExtra("pregunta", preguntaSeleccionada);
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Log.e("DondeCaiActivity", "Error al obtener preguntas de la base de datos", error.toException());
-                    }
-                });
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Do nothing
             }
         });
     }
+
+    private void createButtons() {
+        LinearLayout buttonsLayout = findViewById(R.id.buttons_layout);
+        buttonsLayout.removeAllViews();
+        for (final String categoria : categoriasList) {
+            Button button = new Button(this);
+            button.setText(categoria);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    obtenerPreguntaAleatoria(categoria);
+                }
+            });
+            buttonsLayout.addView(button);
+        }
+    }
+
+    private void obtenerPreguntaAleatoria(final String categoriaSeleccionada) {
+        DatabaseReference preguntasRef = FirebaseDatabase.getInstance().getReference()
+                .child("categorias").child(categoriaSeleccionada);
+        preguntasRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Pregunta> preguntas = new ArrayList<>();
+                for (DataSnapshot preguntaSnapshot : dataSnapshot.getChildren()) {
+                    Pregunta pregunta = preguntaSnapshot.getValue(Pregunta.class);
+                    preguntas.add(pregunta);
+                }
+                if (preguntas.isEmpty()) {
+                    Toast.makeText(DondeCaiActivity.this, "No hay preguntas en la categoría seleccionada", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                int randomIndex = new Random().nextInt(preguntas.size());
+                Pregunta preguntaAleatoria = preguntas.get(randomIndex);
+                mostrarPregunta(preguntaAleatoria);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Do nothing
+            }
+        });
+    }
+
+    private void mostrarPregunta(Pregunta pregunta) {
+        Intent intent = new Intent(this, PreguntaActivity.class);
+        intent.putExtra("pregunta", pregunta);
+        startActivity(intent);
+    }
+
 }
+
 
 
