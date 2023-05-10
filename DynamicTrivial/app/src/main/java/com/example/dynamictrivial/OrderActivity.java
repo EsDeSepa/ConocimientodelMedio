@@ -1,6 +1,7 @@
 package com.example.dynamictrivial;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import java.util.List;
 
 public class OrderActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
+    MediaPlayer mp;
     private List<String> jugadores = new ArrayList<>();
     private LinearLayout linearLayout;
     private TextView[] textViews;
@@ -35,6 +37,7 @@ public class OrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
+        mp = MediaPlayer.create(this, R.raw.click_sound);
         testSubjects.add("pepe");
         testSubjects.add("paco");
         testSubjects.add("pedro");
@@ -75,6 +78,7 @@ public class OrderActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                mp.start();
                 // Shuffle the array list containing the test subjects
                 Collections.shuffle(jugadores);
 

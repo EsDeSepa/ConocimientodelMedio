@@ -1,6 +1,7 @@
 package com.example.dynamictrivial;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -23,12 +24,14 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
     private EditText txtemail, txtpassoword;
     private Button login_btn;
+    MediaPlayer mp;
     FirebaseAuth mAuth;
     String loginemail, loginpassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mp = MediaPlayer.create(this, R.raw.click_sound);
         txtemail = findViewById(R.id.email_login_edittext);
         txtpassoword = findViewById(R.id.password_login_edittext);
         login_btn = findViewById(R.id.login_button);
@@ -37,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mp.start();
 
                 if (!validateEmail() | !validatePassword()) {
                     return;
@@ -68,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                mp.start();
                 // do something when the TextView is clicked
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);

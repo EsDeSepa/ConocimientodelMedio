@@ -1,6 +1,7 @@
 package com.example.dynamictrivial;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -23,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegisterActivity extends AppCompatActivity {
     EditText username_edittext, mail_edittext,password_edittext, password_repeat_edittext;
     Button login_button;
+    MediaPlayer mp;
     TextView text_view_register;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
@@ -36,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         TextView registerLink = findViewById(R.id.register_textview);
+        mp = MediaPlayer.create(this, R.raw.click_sound);
         username_edittext = findViewById(R.id.username_edittext);
         mail_edittext = findViewById(R.id.mail_edittext);
         password_edittext = findViewById(R.id.password_edittext);
@@ -58,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mp.start();
                 if (!validateUsername() | !validateEmail() | !validatePassword()) {
                     return;
                 }
@@ -97,6 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                mp.start();
                 // do something when the TextView is clicked
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);

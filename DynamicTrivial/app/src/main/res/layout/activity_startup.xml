@@ -28,9 +28,6 @@
             android:layout_height="229dp"
             app:srcCompat="@drawable/dynamictriviallogo" />
 
-
-
-
         <Space
             android:layout_width="match_parent"
             android:layout_height="30dp" />
