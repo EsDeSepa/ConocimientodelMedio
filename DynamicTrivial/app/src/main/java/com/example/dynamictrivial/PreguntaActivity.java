@@ -39,6 +39,7 @@ public class PreguntaActivity extends AppCompatActivity {
 
         // Obtener los datos de la pregunta seleccionada
         Intent intent = getIntent();
+        String cat = intent.getStringExtra("cat");
         Pregunta pregunta = intent.getParcelableExtra("pregunta");
 
         // Obtener las vistas del layout
@@ -73,6 +74,8 @@ public class PreguntaActivity extends AppCompatActivity {
                         Toast.makeText(PreguntaActivity.this, "¡Respuesta correcta!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(PreguntaActivity.this, ResultadoActivity.class);
                         intent.putExtra("answer", true);
+                        intent.putExtra("cat",cat);
+                        //pasar jugador
                         startActivity(intent);
                         finish();
                     } else {
@@ -80,6 +83,8 @@ public class PreguntaActivity extends AppCompatActivity {
                         Toast.makeText(PreguntaActivity.this, "Respuesta incorrecta, intenta de nuevo", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(PreguntaActivity.this, ResultadoActivity.class);
                         intent.putExtra("answer", false);
+                        intent.putExtra("cat",cat);
+                        //pasar jugador
                         startActivity(intent);
                         finish();
                     }

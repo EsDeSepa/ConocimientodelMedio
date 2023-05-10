@@ -35,6 +35,7 @@ public class DondeCaiActivity extends AppCompatActivity {
 
     private DatabaseReference categoriasRef;
     private List<String> categoriasList = new ArrayList<>();
+    private String categoriaNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class DondeCaiActivity extends AppCompatActivity {
     }
 
     private void obtenerPreguntaAleatoria(final String categoriaSeleccionada) {
+        categoriaNext = categoriaSeleccionada;
         DatabaseReference preguntasRef = FirebaseDatabase.getInstance().getReference()
                 .child("categorias").child(categoriaSeleccionada);
         preguntasRef.addValueEventListener(new ValueEventListener() {
@@ -105,6 +107,8 @@ public class DondeCaiActivity extends AppCompatActivity {
 
     private void mostrarPregunta(Pregunta pregunta) {
         Intent intent = new Intent(this, PreguntaActivity.class);
+        intent.putExtra("cat", categoriaNext);
+        //pasar jugador actual
         intent.putExtra("pregunta", pregunta);
         startActivity(intent);
     }

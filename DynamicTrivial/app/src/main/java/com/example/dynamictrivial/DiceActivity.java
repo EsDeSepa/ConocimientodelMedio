@@ -11,12 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
-//import com.example.dynamictrivial.databinding.ActivityMainBinding;
-
 public class DiceActivity extends AppCompatActivity {
 
     ImageView diceImg;
     Button rollButton;
+    Button nextButton;
     Boolean pressed;
 
     @Override
@@ -33,17 +32,27 @@ public class DiceActivity extends AppCompatActivity {
         rollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view){
-            if(!pressed) {
+                if(!pressed) {
                     rollDice();
                     pressed = true;
                     MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_sound);
                     mediaPlayer.start();
+                    nextButton.setVisibility(View.VISIBLE); // make the button visible
                 }
             }
         });
 
-
+        nextButton = (Button) findViewById(R.id.next_button);
+        nextButton.setVisibility(View.INVISIBLE); // set the button to be invisible by default
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View view){
+                Intent intent = new Intent(DiceActivity.this, DondeCaiActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
     public void rollDice() {
         int diceValue = new Random().nextInt(6) + 1;
         int res = getResources().getIdentifier("dice" + diceValue, "drawable", "com.example.dynamictrivial");
