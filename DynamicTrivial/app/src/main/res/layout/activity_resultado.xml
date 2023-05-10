@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_pregunta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pregunta"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
+
+    <RadioGroup
+        android:id="@+id/radio_group_opciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_pregunta"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
+        <!---
+                <RadioButton
+                    android:id="@+id/rb_opcion1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Opción 1"
+                    android:textSize="16sp"/>
+
+                <RadioButton
+                    android:id="@+id/rb_opcion2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Opción 2"
+                    android:textSize="16sp"/>
+
+                <RadioButton
+                    android:id="@+id/rb_opcion3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Opción 3"
+                    android:textSize="16sp"/>
+
+                <RadioButton
+                    android:id="@+id/rb_opcion4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Opción 4"
+                    android:textSize="16sp"/>
+                    -->
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/btn_responder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Responder"
+                android:layout_below="@id/radio_group_opciones"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="32dp"/>
+        </RelativeLayout>

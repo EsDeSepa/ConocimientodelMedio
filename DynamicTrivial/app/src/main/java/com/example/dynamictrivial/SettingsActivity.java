@@ -6,9 +6,9 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-/*
-public class SettingsActivity extends AppCompatActivity {
 
+public class SettingsActivity extends AppCompatActivity {
+/*
     private Switch switch1;
     private Switch switch2;
     private Switch switch3;
@@ -71,5 +71,5 @@ public class SettingsActivity extends AppCompatActivity {
             Toast.makeText(SettingsActivity.this, message, Toast.LENGTH_SHORT).show();
         }
     };
-}
 */
+}

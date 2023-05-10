@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-/*
-public class PickActivity extends AppCompatActivity {
 
+public class PickActivity extends AppCompatActivity {
+/*
     private String miVariable = "";
 
     private Button buttonCat1;
@@ -71,5 +71,5 @@ public class PickActivity extends AppCompatActivity {
             }
         });
     }
+    */
 }
-*/

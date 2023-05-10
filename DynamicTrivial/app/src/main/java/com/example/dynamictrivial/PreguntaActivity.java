@@ -62,22 +62,29 @@ public class PreguntaActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Obtener la opción seleccionada
                 int opcionSeleccionada = radioGroupOpciones.getCheckedRadioButtonId();
-                if (opcionSeleccionada == -1) {
+                //if (opcionSeleccionada == -1) {
                     // Si no se ha seleccionado ninguna opción, mostrar un mensaje
-                    Toast.makeText(PreguntaActivity.this, "Debes seleccionar una opción", Toast.LENGTH_SHORT).show();
-                } else {
+                  //  Toast.makeText(PreguntaActivity.this, "Debes seleccionar una opción", Toast.LENGTH_SHORT).show();
+                //} else {
                     // Si se ha seleccionado una opción, verificar si es la respuesta correcta
                     int opcionSeleccionadaIndex = radioGroupOpciones.indexOfChild(findViewById(opcionSeleccionada));
                     if (opcionSeleccionadaIndex == respuesta) {
-                        // Si es la respuesta correcta, mostrar un mensaje y cerrar la actividad
+                        // Si es la respuesta correcta, mostrar un mensaje y lanzar una nueva actividad con la respuesta verdadera
                         Toast.makeText(PreguntaActivity.this, "¡Respuesta correcta!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(PreguntaActivity.this, ResultadoActivity.class);
+                        intent.putExtra("answer", true);
+                        startActivity(intent);
                         finish();
                     } else {
-                        // Si no es la respuesta correcta, mostrar un mensaje
+                        // Si no es la respuesta correcta, mostrar un mensaje y lanzar una nueva actividad con la respuesta falsa
                         Toast.makeText(PreguntaActivity.this, "Respuesta incorrecta, intenta de nuevo", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(PreguntaActivity.this, ResultadoActivity.class);
+                        intent.putExtra("answer", false);
+                        startActivity(intent);
+                        finish();
                     }
                 }
-            }
+            //}
         });
     }
 }
