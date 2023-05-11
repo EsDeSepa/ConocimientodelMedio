@@ -106,7 +106,7 @@ public class ClasificacionActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         boolean dadoValue = dataSnapshot.getValue(Boolean.class);
-                        if (dadoValue) {
+                        if (dadoValue == true) {
                             Intent intent = new Intent(ClasificacionActivity.this, DiceSensorActivity.class);
                             startActivity(intent);
                         } else {
