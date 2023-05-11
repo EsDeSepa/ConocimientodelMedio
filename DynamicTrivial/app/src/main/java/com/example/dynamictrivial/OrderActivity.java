@@ -45,7 +45,7 @@ public class OrderActivity extends AppCompatActivity {
         LinearLayout orderLayout = findViewById(R.id.order_layout);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mDatabase.child("Jugadores").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("jugadores").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 jugadores = new ArrayList<>();
@@ -91,7 +91,7 @@ public class OrderActivity extends AppCompatActivity {
                 for (int i = 0; i < jugadores.size(); i++) {
                     String jugadorId = jugadores.get(i);
                     int turno = i + 1;
-                    mDatabase.child("Jugadores").child(jugadorId).child("turno").setValue(turno);
+                    mDatabase.child("jugadores").child(jugadorId).child("turno").setValue(turno);
                 }
 
 
@@ -99,7 +99,7 @@ public class OrderActivity extends AppCompatActivity {
                 for (int i = 0; i < jugadores.size(); i++) {
                     String jugadorId = jugadores.get(i);
                     TextView nameView = new TextView(OrderActivity.this);
-                    DatabaseReference jugadorRef = mDatabase.child("Jugadores").child(jugadorId);
+                    DatabaseReference jugadorRef = mDatabase.child("jugadores").child(jugadorId);
                     jugadorRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -116,8 +116,5 @@ public class OrderActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
     }
 }

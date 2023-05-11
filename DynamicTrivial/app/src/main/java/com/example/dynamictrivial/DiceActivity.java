@@ -17,13 +17,15 @@ public class DiceActivity extends AppCompatActivity {
     Button rollButton;
     Button nextButton;
     Boolean pressed;
-
+    MediaPlayer mpClic;
+    MediaPlayer mpDice;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dice);
         diceImg = findViewById(R.id.imageDice);
-
+        mpClic = MediaPlayer.create(this, R.raw.click_sound);
+        mpDice = MediaPlayer.create(this, R.raw.dice_sound);
         rollDice();
 
         pressed = false;
@@ -32,11 +34,10 @@ public class DiceActivity extends AppCompatActivity {
         rollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view){
+                mpDice.start();
                 if(!pressed) {
                     rollDice();
                     pressed = true;
-                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_sound);
-                    mediaPlayer.start();
                     nextButton.setVisibility(View.VISIBLE); // make the button visible
                 }
             }
@@ -47,6 +48,7 @@ public class DiceActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view){
+                mpClic.start();
                 Intent intent = new Intent(DiceActivity.this, DondeCaiActivity.class);
                 startActivity(intent);
             }

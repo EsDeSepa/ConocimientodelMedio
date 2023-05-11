@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="125dp"
         android:layout_margin="50dp"
         android:padding="10dp"
         android:gravity="center"
@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <!--
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -192,7 +193,7 @@
                 android:switchMinWidth="60dp"
                 android:layout_marginTop="8dp" />
 
-
+        -->
         </LinearLayout>
 
     </LinearLayout>

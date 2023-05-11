@@ -22,7 +22,7 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
     ImageView diceImg;
     Button rollButton;
     Boolean pressed;
-
+    MediaPlayer mp;
 
     //private MediaPlayer mediaPlayer;
 
@@ -38,6 +38,7 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dice_sensor);
+        mp = MediaPlayer.create(this, R.raw.dice_sound);
         diceImg = findViewById(R.id.imageDice);
 
         rollDice();
@@ -58,6 +59,7 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
         rollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 if (!pressed) {
                     rollDice();
                     /*mediaPlayer.start();

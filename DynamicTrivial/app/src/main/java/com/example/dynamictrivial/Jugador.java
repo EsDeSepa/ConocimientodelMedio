@@ -1,38 +1,81 @@
 package com.example.dynamictrivial;
 
+import com.example.dynamictrivial.DatosPartida;
 
 public class Jugador {
     private String nombre;
-    private int puntos;
-    private int turno;
+    private int puntosArte;
+    private int puntosDeporte;
+    private int puntosEntretenimiento;
+    private int puntosGeografia;
+    private int puntosHistoria;
+    private int turno = DatosPartida.getTurno();
 
-    public Jugador() {
-        // Constructor vacío requerido para DataSnapshot.getValue(Jugador.class)
-    }
-    public Jugador(String nombre, int puntos,int turno) {
+
+    public Jugador(String nombre, int puntosArte, int puntosDeporte, int puntosEntretenimiento, int puntosGeografia, int puntosHistoria, int turno) {
         this.nombre = nombre;
-        this.puntos = puntos;
+        this.puntosArte = puntosArte;
+        this.puntosDeporte = puntosDeporte;
+        this.puntosEntretenimiento = puntosEntretenimiento;
+        this.puntosGeografia = puntosGeografia;
+        this.puntosHistoria = puntosHistoria;
         this.turno = turno;
+    }
+
+    public Jugador(String nombre, int puntosArte, int puntosDeporte, int puntosEntretenimiento, int puntosGeografia, int puntosHistoria) {
+
     }
 
     public String getNombre() {
         return nombre;
     }
-
-    public int getPuntos() {
-        return puntos;
-    }
-    public int getTurno() {
-        return turno;
-    }
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public void setPuntuacion(int puntuacion) {
-        this.puntos = puntos;
+    public int getPuntosArte() {
+        return puntosArte;
     }
 
+    public void setPuntosArte(int puntosArte) {
+        this.puntosArte = puntosArte;
+    }
+
+    public int getPuntosDeporte() {
+        return puntosDeporte;
+    }
+
+    public void setPuntosDeporte(int puntosDeporte) {
+        this.puntosDeporte = puntosDeporte;
+    }
+
+    public int getPuntosEntretenimiento() {
+        return puntosEntretenimiento;
+    }
+
+    public void setPuntosEntretenimiento(int puntosEntretenimiento) {
+        this.puntosEntretenimiento = puntosEntretenimiento;
+    }
+
+    public int getPuntosGeografia() {
+        return puntosGeografia;
+    }
+
+    public void setPuntosGeografia(int puntosGeografia) {
+        this.puntosGeografia = puntosGeografia;
+    }
+
+    public int getPuntosHistoria() {
+        return puntosHistoria;
+    }
+
+    public void setPuntosHistoria(int puntosHistoria) {
+        this.puntosHistoria = puntosHistoria;
+    }
+
+    public int getTurno() {
+        return turno;
+    }
     public void setTurno(int turno) {
         this.turno = turno;
     }

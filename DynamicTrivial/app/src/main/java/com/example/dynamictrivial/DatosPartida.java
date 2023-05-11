@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class DatosPartida {
     private ArrayList<Jugador> jugadores;
-    private String turno;
+    private static int turno;
 
-    public DatosPartida(ArrayList<Jugador> jugadores, String turno) {
+    public DatosPartida(ArrayList<Jugador> jugadores, int turno) {
         this.jugadores = jugadores;
         this.turno = turno;
     }
@@ -15,11 +15,11 @@ public class DatosPartida {
         return jugadores;
     }
 
-    public String getTurno() {
+    public static int getTurno() {
         return turno;
     }
 
-    public void setTurno(String turno) {
+    public void setTurno(int turno) {
         this.turno = turno;
     }
 }

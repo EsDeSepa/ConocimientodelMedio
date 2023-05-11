@@ -1,6 +1,7 @@
 package com.example.dynamictrivial;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,10 +27,28 @@ import java.util.Map;
 
 public class ResultadoActivity extends AppCompatActivity {
 
+    private Button btnContinuar;
+    MediaPlayer mp;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultado);
         LinearLayout layout = findViewById(R.id.login_layout);
+        btnContinuar = findViewById(R.id.btn_continue);
+        mp = MediaPlayer.create(this, R.raw.click_sound);
+
+        btnContinuar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mp.start();
+                //añadir sentencia para seguir el juego, probablemente volver a lanzar el dado
+                //quizá se pueda guardar la primera elección entre dado sensor y dado normal
+                // y en este punto, mandar al usuario a esa elección. O simplemente al menú ppal
+                Intent intent = new Intent(ResultadoActivity.this, DiceActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         // Obtener el valor del extra "respuesta"
         Intent intent = getIntent();
@@ -67,7 +86,7 @@ public class ResultadoActivity extends AppCompatActivity {
         }
         else {
             TextView textView = new TextView(this);
-            textView.setText(answer + "");
+            //textView.setText(answer + "");
             layout.addView(textView);
             // Añadir código para modificar la vista si la respuesta es erronea
         }

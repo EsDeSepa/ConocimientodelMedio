@@ -1,6 +1,7 @@
 package com.example.dynamictrivial;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,7 @@ public class PreguntaActivity extends AppCompatActivity {
     private TextView tvPregunta;
     private RadioGroup radioGroupOpciones;
     private Button btnResponder;
+    MediaPlayer mp;
     private List<String> opciones;
     private int respuesta;
 
@@ -36,6 +38,7 @@ public class PreguntaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pregunta);
+        mp = MediaPlayer.create(this, R.raw.click_sound);
 
         // Obtener los datos de la pregunta seleccionada
         Intent intent = getIntent();
@@ -61,6 +64,7 @@ public class PreguntaActivity extends AppCompatActivity {
         btnResponder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 // Obtener la opción seleccionada
                 int opcionSeleccionada = radioGroupOpciones.getCheckedRadioButtonId();
                 //if (opcionSeleccionada == -1) {
