@@ -31,7 +31,7 @@ public class StartupActivity extends AppCompatActivity {
                 mp.start();
                 Intent intent = new Intent(StartupActivity.this, LoginActivity.class);
                 startActivity(intent);
-                finish();
+
             }
         });
         Button diceSensorButton = (Button) findViewById(R.id.dice_sensor_button);

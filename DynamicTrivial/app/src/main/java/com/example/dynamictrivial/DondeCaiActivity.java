@@ -125,6 +125,7 @@ public class DondeCaiActivity extends AppCompatActivity {
         //pasar jugador actual
         intent.putExtra("pregunta", pregunta);
         startActivity(intent);
+        finish();
     }
 
 }

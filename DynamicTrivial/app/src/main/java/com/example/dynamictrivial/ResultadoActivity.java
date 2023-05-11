@@ -33,7 +33,7 @@ public class ResultadoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultado);
-        LinearLayout layout = findViewById(R.id.login_layout);
+        LinearLayout layout = findViewById(R.id.res_layout);
         btnContinuar = findViewById(R.id.btn_continue);
         mp = MediaPlayer.create(this, R.raw.click_sound);
 
@@ -44,7 +44,7 @@ public class ResultadoActivity extends AppCompatActivity {
                 //añadir sentencia para seguir el juego, probablemente volver a lanzar el dado
                 //quizá se pueda guardar la primera elección entre dado sensor y dado normal
                 // y en este punto, mandar al usuario a esa elección. O simplemente al menú ppal
-                Intent intent = new Intent(ResultadoActivity.this, DiceActivity.class);
+                Intent intent = new Intent(ResultadoActivity.this, ResumenActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -58,8 +58,8 @@ public class ResultadoActivity extends AppCompatActivity {
         boolean answer = intent.getBooleanExtra("answer", false);
         if (answer) {
             TextView textView = new TextView(this);
-            textView.setText(answer + "");
-            layout.addView(textView);
+            textView.setText("¡Correcto! Acertaste la pregunta de la categoría " + categoriaMayus);
+            layout.addView(textView,2);
             /*FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference jugadoresRef = database.getReference().child("jugadores").child("jugador1");
 
@@ -86,8 +86,8 @@ public class ResultadoActivity extends AppCompatActivity {
         }
         else {
             TextView textView = new TextView(this);
-            //textView.setText(answer + "");
-            layout.addView(textView);
+            textView.setText("¡Incorrecto! Fallaste la pregunta de la categoría " + categoriaMayus);
+            layout.addView(textView,2);
             // Añadir código para modificar la vista si la respuesta es erronea
         }
     }

@@ -7,10 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -19,15 +16,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
-public class ResumenActivity extends AppCompatActivity {
+public class ClasificacionActivity extends AppCompatActivity {
 
 
     Button nextButton;
@@ -38,9 +29,9 @@ public class ResumenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resumen);
+        setContentView(R.layout.activity_clasificacion);
         mp = MediaPlayer.create(this, R.raw.click_sound);
-        LinearLayout layoutResumen = findViewById(R.id.layout_resumen); // find the existing linear layout
+        LinearLayout layoutResumen = findViewById(R.id.layout_clasificacion); // find the existing linear layout
 
         // get the player object from the Firebase JSON
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
@@ -51,28 +42,26 @@ public class ResumenActivity extends AppCompatActivity {
                 Map<String, Object> playersObj = (Map<String, Object>) map.get("jugadores");
                 Map<String, Object> currentPlayerObj = (Map<String, Object>) playersObj.get(currentPlayer);
 
-                TextView playerName = findViewById(R.id.jugador);
-                playerName.setText(currentPlayerObj.get("nombre").toString());
 
-                TextView puntosArte = new TextView(ResumenActivity.this);
-                puntosArte.setText("Puntos de la categoría Arte: " + ((Long) currentPlayerObj.get("puntosArte")).intValue());
-                layoutResumen.addView(puntosArte,1);
+                TextView puntosArte = new TextView(ClasificacionActivity.this);
+                puntosArte.setText("Puntos de la categoría Arte: " + ((Integer) currentPlayerObj.get("puntosArte")).intValue());
+                layoutResumen.addView(puntosArte);
 
-                TextView puntosDeporte = new TextView(ResumenActivity.this);
-                puntosDeporte.setText("Puntos de la categoría Deporte: " + ((Long) currentPlayerObj.get("puntosDeporte")).intValue());
-                layoutResumen.addView(puntosDeporte,2);
+                TextView puntosDeporte = new TextView(ClasificacionActivity.this);
+                puntosDeporte.setText("Puntos de la categoría Arte: " + ((Integer) currentPlayerObj.get("puntosArte")).intValue());
+                layoutResumen.addView(puntosDeporte);
 
-                TextView puntosEntretenimiento = new TextView(ResumenActivity.this);
-                puntosEntretenimiento.setText("Puntos de la categoría Entretenimiento: " + ((Long) currentPlayerObj.get("puntosEntretenimiento")).intValue());
-                layoutResumen.addView(puntosEntretenimiento,3);
+                TextView puntosEntretenimiento = new TextView(ClasificacionActivity.this);
+                puntosEntretenimiento.setText("Puntos de la categoría Arte: " + ((Integer) currentPlayerObj.get("puntosArte")).intValue());
+                layoutResumen.addView(puntosEntretenimiento);
 
-                TextView puntosGeografia = new TextView(ResumenActivity.this);
-                puntosGeografia.setText("Puntos de la categoría Geografía: " + ((Long) currentPlayerObj.get("puntosGeografia")).intValue());
-                layoutResumen.addView(puntosGeografia,4);
+                TextView puntosGeografia = new TextView(ClasificacionActivity.this);
+                puntosGeografia.setText("Puntos de la categoría Arte: " + ((Integer) currentPlayerObj.get("puntosArte")).intValue());
+                layoutResumen.addView(puntosGeografia);
 
-                TextView puntosHistoria = new TextView(ResumenActivity.this);
-                puntosHistoria.setText("Puntos de la categoría Historia: " + ((Long) currentPlayerObj.get("puntosHistoria")).intValue());
-                layoutResumen.addView(puntosHistoria,5);
+                TextView puntosHistoria = new TextView(ClasificacionActivity.this);
+                puntosHistoria.setText("Puntos de la categoría Arte: " + ((Integer) currentPlayerObj.get("puntosArte")).intValue());
+                layoutResumen.addView(puntosHistoria);
             }
 
             @Override
@@ -87,7 +76,7 @@ public class ResumenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mp.start();
-                Intent intent = new Intent(ResumenActivity.this, ClasificacionActivity.class);
+                Intent intent = new Intent(ClasificacionActivity.this, ClasificacionActivity.class);
                 startActivity(intent);
 
                 //activar cuando se cree la clase siguiente = ClasificacionActivity con la clasificacion de la partida en ese momento

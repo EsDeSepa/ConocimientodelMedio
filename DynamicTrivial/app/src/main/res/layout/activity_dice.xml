@@ -9,7 +9,7 @@
 
 
     <LinearLayout
-        android:id="@+id/login_layout"
+        android:id="@+id/dice_layout"
         android:background="@drawable/layout_bg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -23,12 +23,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/title_textview"
+            android:id="@+id/current_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="LOGO"
+            android:text=""
             android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/login_layout"
+            app:layout_constraintBottom_toTopOf="@+id/dice_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
