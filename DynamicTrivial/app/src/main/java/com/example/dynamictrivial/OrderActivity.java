@@ -27,9 +27,11 @@ import java.util.List;
 public class OrderActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     MediaPlayer mp;
+    Button btnContinuar;
     private List<String> jugadores = new ArrayList<>();
     private LinearLayout linearLayout;
     private TextView[] textViews;
+    private ArrayList<String> selectedPlayers;
     ArrayList<String> testSubjects = new ArrayList<>();
 
     @Override
@@ -37,11 +39,16 @@ public class OrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
+        btnContinuar = findViewById(R.id.btn_continue);
         mp = MediaPlayer.create(this, R.raw.click_sound);
+
+        Intent intent = getIntent();
+        selectedPlayers = intent.getStringArrayListExtra("selectedPlayers");
+        /*
         testSubjects.add("pepe");
         testSubjects.add("paco");
         testSubjects.add("pedro");
-
+        */
         LinearLayout orderLayout = findViewById(R.id.order_layout);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -52,10 +59,19 @@ public class OrderActivity extends AppCompatActivity {
                 for (DataSnapshot jugadorSnapshot : dataSnapshot.getChildren()) {
                     String jugadorId = jugadorSnapshot.getKey();
                     String nombre = jugadorSnapshot.child("nombre").getValue(String.class);
+                    if (selectedPlayers.contains(nombre)) {
+                        jugadores.add(jugadorId);
+                        TextView nameView = new TextView(getApplicationContext());
+                        nameView.setText(nombre);
+                        orderLayout.addView(nameView);
+                    }
+
+                    /*
                     jugadores.add(jugadorId);
                     TextView nameView = new TextView(getApplicationContext());
                     nameView.setText(nombre);
                     orderLayout.addView(nameView);
+                     */
                 }
             }
 
@@ -64,7 +80,6 @@ public class OrderActivity extends AppCompatActivity {
 
             }
         });
-
 
 /*
         for (int i = 0; i<testSubjects.size(); i++) {
@@ -114,6 +129,34 @@ public class OrderActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+        Button nextButton = (Button) findViewById(R.id.btn_continue);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something when the TextView is clicked
+                mp.start();
+
+                DatabaseReference dadoRef = FirebaseDatabase.getInstance().getReference().child("dado");
+                dadoRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        boolean dadoValue = dataSnapshot.getValue(Boolean.class);
+                        if (dadoValue == true) {
+                            Intent intent = new Intent(OrderActivity.this, DiceSensorActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(OrderActivity.this, DiceActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Manejar el error en caso de que ocurra
+                    }
+                });
             }
         });
     }

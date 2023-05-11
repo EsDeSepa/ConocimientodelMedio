@@ -19,7 +19,7 @@
 
 
     <LinearLayout
-        android:id="@+id/switches_layout"
+        android:id="@+id/rules_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="50dp"
@@ -50,150 +50,176 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/ajustes_layout"
             android:orientation="horizontal">
 
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="¿Quieres activar el SUPER DADO SENSOR?"
+                    android:gravity="center"/>
+
+                <Switch
+                    android:id="@+id/btnDado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/switches_layout"
+                    android:switchMinWidth="60dp"
+                    android:layout_marginTop="8dp" />
+
+                <LinearLayout
+                    android:id="@+id/check_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Participantes:"
+                        android:textSize="15sp"
+                        android:gravity="center"/>
+
+
+                </LinearLayout>
+
+
+                <!--
+                <CheckBox
+                    android:id="@+id/check_box_players"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/switches_layout"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp">
+
+                </CheckBox>
+                -->
+                <Button
+                    android:id="@+id/btn_continue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_below="@id/switches_layout"
+                    android:layout_marginBottom="32dp"
+                    android:text="Continuar"/>
+
+            </LinearLayout>
             <!--
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Categoria 1"
-                    android:textColor="#CC0000" />
 
-                <Switch
-                    android:id="@+id/cat1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:switchMinWidth="60dp"
-                    android:layout_marginTop="8dp" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-            </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Categoria 3"
+                                android:textColor="#00CC00"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                            <Switch
+                                android:id="@+id/cat3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:switchMinWidth="60dp"
+                                android:layout_marginTop="8dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Categoria 2"
-                    android:textColor="#0000CC" />
+                        </LinearLayout>
 
-                <Switch
-                    android:id="@+id/cat2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:switchMinWidth="60dp"
-                    android:layout_marginTop="8dp" />
+                    </LinearLayout>
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="30dp"
+                        android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Categoria 3"
-                    android:textColor="#00CC00"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Categoria 4"
+                                android:textColor="#CC00CC"/>
 
-                <Switch
-                    android:id="@+id/cat3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:switchMinWidth="60dp"
-                    android:layout_marginTop="8dp" />
+                            <Switch
+                                android:id="@+id/cat4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:switchMinWidth="60dp"
+                                android:layout_marginTop="8dp" />
 
-            </LinearLayout>
+                        </LinearLayout>
 
-        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Categoria 5"
+                                android:textColor="#CCCC00"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                            <Switch
+                                android:id="@+id/cat5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:switchMinWidth="60dp"
+                                android:layout_marginTop="8dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Categoria 4"
-                    android:textColor="#CC00CC"/>
+                        </LinearLayout>
 
-                <Switch
-                    android:id="@+id/cat4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:switchMinWidth="60dp"
-                    android:layout_marginTop="8dp" />
+                    </LinearLayout>
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="MAS AJUSTES"
+                            android:textColor="#000000"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Categoria 5"
-                    android:textColor="#CCCC00"/>
+                        <Switch
+                            android:id="@+id/switchOtro"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:switchMinWidth="60dp"
+                            android:layout_marginTop="8dp" />
 
-                <Switch
-                    android:id="@+id/cat5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:switchMinWidth="60dp"
-                    android:layout_marginTop="8dp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MAS AJUSTES"
-                android:textColor="#000000"/>
-
-            <Switch
-                android:id="@+id/switchOtro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:switchMinWidth="60dp"
-                android:layout_marginTop="8dp" />
-
-        -->
+                    -->
         </LinearLayout>
 
     </LinearLayout>

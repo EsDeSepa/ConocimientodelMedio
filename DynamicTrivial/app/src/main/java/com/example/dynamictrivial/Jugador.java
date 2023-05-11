@@ -1,5 +1,7 @@
 package com.example.dynamictrivial;
 
+import android.os.Parcel;
+
 import com.example.dynamictrivial.DatosPartida;
 
 public class Jugador {
@@ -20,6 +22,16 @@ public class Jugador {
         this.puntosGeografia = puntosGeografia;
         this.puntosHistoria = puntosHistoria;
         this.turno = turno;
+    }
+
+    protected Jugador(Parcel in) {
+        nombre = in.readString();
+        puntosArte = in.readInt();
+        puntosDeporte = in.readInt();
+        puntosEntretenimiento = in.readInt();
+        puntosGeografia = in.readInt();
+        puntosHistoria = in.readInt();
+        turno = in.readInt();
     }
 
     public Jugador(String nombre, int puntosArte, int puntosDeporte, int puntosEntretenimiento, int puntosGeografia, int puntosHistoria) {

@@ -71,14 +71,14 @@ public class StartupActivity extends AppCompatActivity {
 
             }
         });
-        Button dondeCaiButton = (Button) findViewById(R.id.dondecai_button);
-        dondeCaiButton.setOnClickListener(new View.OnClickListener() {
+        Button settingsButton = (Button) findViewById(R.id.settings_button);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // do something when the TextView is clicked
                 mp.start();
-                Intent intent = new Intent(StartupActivity.this, DondeCaiActivity.class);
+                Intent intent = new Intent(StartupActivity.this, SettingsActivity.class);
                 startActivity(intent);
             }
         });

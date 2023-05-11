@@ -152,7 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            Intent intent = new Intent(RegisterActivity.this, StartupActivity.class);
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(intent);
         }
     }

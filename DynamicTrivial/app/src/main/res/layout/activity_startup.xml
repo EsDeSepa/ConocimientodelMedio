@@ -58,11 +58,11 @@
             android:text="Orden" />
 
         <Button
-            android:id="@+id/dondecai_button"
+            android:id="@+id/settings_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="donde cai" />
+            android:text="settings" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
