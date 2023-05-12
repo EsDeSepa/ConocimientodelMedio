@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="125dp"
         android:layout_margin="50dp"
         android:padding="10dp"
         android:gravity="center"
@@ -19,8 +19,8 @@
 
     <LinearLayout
         android:id="@+id/layout_resumen"
-        android:layout_width="317dp"
-        android:layout_height="426dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="50dp"
         android:background="@drawable/layout_bg"
         android:gravity="center"

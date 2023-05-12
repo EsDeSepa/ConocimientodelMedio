@@ -7,6 +7,15 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="125dp"
+        android:layout_margin="50dp"
+        android:padding="10dp"
+        android:gravity="center"
+        app:srcCompat="@drawable/dynamictriviallogo"
+        tools:ignore="MissingConstraints" />
 
     <LinearLayout
         android:id="@+id/container"
@@ -20,10 +29,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="30dp"  />
 
         <LinearLayout
             android:id="@+id/order_layout"
@@ -41,7 +46,7 @@
 
         <Button
             android:id="@+id/shuffle_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Shuffle" />
         <Button
