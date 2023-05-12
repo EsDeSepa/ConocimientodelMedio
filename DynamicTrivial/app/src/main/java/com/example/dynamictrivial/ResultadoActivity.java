@@ -60,29 +60,48 @@ public class ResultadoActivity extends AppCompatActivity {
             TextView textView = new TextView(this);
             textView.setText("¡Correcto! Acertaste la pregunta de la categoría " + categoriaMayus);
             layout.addView(textView,2);
-            /*FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference jugadoresRef = database.getReference().child("jugadores").child("jugador1");
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference currentPlayer = database.getReference().child("jugadorActual");
 
-            jugadoresRef.addListenerForSingleValueEvent(new ValueEventListener() {
+// Add a listener to get the current player's name
+            currentPlayer.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    // Get the current value of puntos
-                    int puntos = dataSnapshot.child("puntos" + categoriaMayus).getValue(Integer.class);
+                    // Get the current player's name
+                    String playerName = dataSnapshot.getValue(String.class);
 
-                    // Increase puntos by 1
-                    puntos++;
+                    // Get a reference to the current player's data
+                    DatabaseReference jugadorActual = FirebaseDatabase.getInstance().getReference().child("jugadores").child(playerName);
 
-                    // Update puntos in the database
-                    Map<String, Object> childUpdates = new HashMap<>();
-                    childUpdates.put("puntos" + categoriaMayus, puntos);
-                    jugadoresRef.updateChildren(childUpdates);
+                    // Add a listener to get the current player's points
+                    jugadorActual.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            // Get the current value of puntos
+                            int puntos = dataSnapshot.child("puntos" + categoriaMayus).getValue(Integer.class);
+
+                            // Increase puntos by 1
+                            puntos++;
+
+                            // Update puntos in the database
+                            Map<String, Object> childUpdates = new HashMap<>();
+                            childUpdates.put("puntos" + categoriaMayus, puntos);
+                            jugadorActual.updateChildren(childUpdates);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // Handle possible errors
+                        }
+                    });
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     // Handle possible errors
                 }
-            });*/
+            });
+
         }
         else {
             TextView textView = new TextView(this);

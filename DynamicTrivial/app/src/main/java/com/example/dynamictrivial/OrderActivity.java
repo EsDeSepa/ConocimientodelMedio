@@ -20,7 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //import com.example.dynamictrivial.databinding.ActivityMainBinding;
 
@@ -51,6 +53,7 @@ public class OrderActivity extends AppCompatActivity {
         */
         LinearLayout orderLayout = findViewById(R.id.order_layout);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference orderDatabase = FirebaseDatabase.getInstance().getReference().child("orden");
 
         mDatabase.child("jugadores").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -106,6 +109,7 @@ public class OrderActivity extends AppCompatActivity {
                 for (int i = 0; i < jugadores.size(); i++) {
                     String jugadorId = jugadores.get(i);
                     int turno = i + 1;
+                    orderDatabase.child(String.valueOf(i)).setValue(jugadorId);
                     mDatabase.child("jugadores").child(jugadorId).child("turno").setValue(turno);
                 }
 
@@ -137,6 +141,23 @@ public class OrderActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // do something when the TextView is clicked
                 mp.start();
+
+                // Update the "jugadorActual" field in the database with the corresponding "jugadorId" value
+                // Assuming the first player is the current player
+                DatabaseReference jugadorActual = FirebaseDatabase.getInstance().getReference().child("jugadorActual");
+                jugadorActual.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        // Get the current player's name
+                        jugadorActual.setValue(jugadores.get(0));
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        // Handle possible errors
+                    }
+                });
 
                 DatabaseReference dadoRef = FirebaseDatabase.getInstance().getReference().child("dado");
                 dadoRef.addValueEventListener(new ValueEventListener() {

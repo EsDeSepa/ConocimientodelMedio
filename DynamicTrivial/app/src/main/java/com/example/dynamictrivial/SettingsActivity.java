@@ -47,6 +47,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Obtener la referencia al campo "dado" en la base de datos de Firebase
         dadoRef = FirebaseDatabase.getInstance().getReference().child("dado");
+        dadoRef.setValue(false);
         // Agregar un listener para actualizar el valor del campo "dado" cuando cambie el estado del Switch
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -94,6 +95,8 @@ public class SettingsActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 mp.start();
                 // Verificar si se ha seleccionado al menos un jugador
                 if (!selectedPlayers.isEmpty()) {
