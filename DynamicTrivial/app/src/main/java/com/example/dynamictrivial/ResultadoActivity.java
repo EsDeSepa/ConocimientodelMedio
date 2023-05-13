@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ public class ResultadoActivity extends AppCompatActivity {
 
     private Button btnContinuar;
     MediaPlayer mp;
+    List<String> selectedPlayers;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,13 @@ public class ResultadoActivity extends AppCompatActivity {
         LinearLayout layout = findViewById(R.id.res_layout);
         btnContinuar = findViewById(R.id.btn_continue);
         mp = MediaPlayer.create(this, R.raw.click_sound);
+
+        // Obtener el valor del extra "respuesta"
+        Intent intent = getIntent();
+        selectedPlayers = intent.getStringArrayListExtra("selectedPlayers");
+        String cat = intent.getStringExtra("cat");
+        String categoriaMayus = cat.substring(0, 1).toUpperCase() + cat.substring(1);
+        System.out.println(categoriaMayus);
 
         btnContinuar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,16 +54,13 @@ public class ResultadoActivity extends AppCompatActivity {
                 //quizá se pueda guardar la primera elección entre dado sensor y dado normal
                 // y en este punto, mandar al usuario a esa elección. O simplemente al menú ppal
                 Intent intent = new Intent(ResultadoActivity.this, ResumenActivity.class);
+                intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
                 startActivity(intent);
                 finish();
             }
         });
 
-        // Obtener el valor del extra "respuesta"
-        Intent intent = getIntent();
-        String cat = intent.getStringExtra("cat");
-        String categoriaMayus = cat.substring(0, 1).toUpperCase() + cat.substring(1);
-        System.out.println(categoriaMayus);
+
         boolean answer = intent.getBooleanExtra("answer", false);
         if (answer) {
             TextView textView = new TextView(this);

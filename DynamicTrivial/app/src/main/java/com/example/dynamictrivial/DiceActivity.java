@@ -15,6 +15,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class DiceActivity extends AppCompatActivity {
@@ -24,6 +26,7 @@ public class DiceActivity extends AppCompatActivity {
     Button rollButton;
     Button nextButton;
     Boolean pressed;
+    List<String> selectedPlayers;
     MediaPlayer mpClick;
     MediaPlayer mpDice;
     @Override
@@ -37,6 +40,9 @@ public class DiceActivity extends AppCompatActivity {
 
         pressed = false;
         currentPlayerTextView = findViewById(R.id.current_player);
+        //pilla los selectedPlayers
+        Intent intent = getIntent();
+        selectedPlayers = intent.getStringArrayListExtra("selectedPlayers");
 
         // Get a reference to the Firebase database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -93,6 +99,7 @@ public class DiceActivity extends AppCompatActivity {
             public void onClick (View view){
                 mpClick.start();
                 Intent intent = new Intent(DiceActivity.this, DondeCaiActivity.class);
+                intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
                 startActivity(intent);
                 finish();
             }

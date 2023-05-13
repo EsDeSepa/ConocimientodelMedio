@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -52,7 +53,6 @@ public class SettingsActivity extends AppCompatActivity {
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mp.start();
 
                 // Actualizar el valor del campo "dado" en la base de datos de Firebase según el estado del Switch
                 dadoRef.setValue(isChecked);
@@ -95,23 +95,51 @@ public class SettingsActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 mp.start();
                 // Verificar si se ha seleccionado al menos un jugador
                 if (!selectedPlayers.isEmpty()) {
-                    // Mostrar mensaje de jugadores seleccionados y seguir
-                    Toast.makeText(SettingsActivity.this, "¡Jugadores añadidos!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SettingsActivity.this, OrderActivity.class);
-                    intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
-                    startActivity(intent);
-                    finish();
+                    jugadoresRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (String playerName : selectedPlayers) {
+                                Query jugadorQuery = jugadoresRef.orderByChild("nombre").equalTo(playerName);
+                                jugadorQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot jugadorSnapshot : dataSnapshot.getChildren()) {
+                                            DatabaseReference jugadorRef = jugadorSnapshot.getRef();
+                                            jugadorRef.child("puntosArte").setValue(0);
+                                            jugadorRef.child("puntosDeporte").setValue(0);
+                                            jugadorRef.child("puntosEntretenimiento").setValue(0);
+                                            jugadorRef.child("puntosGeografia").setValue(0);
+                                            jugadorRef.child("puntosHistoria").setValue(0);
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        // Manejar el error en caso de que ocurra
+                                    }
+                                });
+                            }
+                            // Mostrar mensaje de jugadores seleccionados y seguir
+                            Toast.makeText(SettingsActivity.this, "¡Jugadores añadidos!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(SettingsActivity.this, OrderActivity.class);
+                            intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
+                            startActivity(intent);
+                            finish();
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            // Manejar el error en caso de que ocurra
+                        }
+                    });
                 } else {
                     // Mostrar mensaje de ningún jugador seleccionado y volver a la actividad actual
                     Toast.makeText(SettingsActivity.this, "¡No se ha seleccionado ningún jugador! Selecciona al menos uno.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
     }
 
     private CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {

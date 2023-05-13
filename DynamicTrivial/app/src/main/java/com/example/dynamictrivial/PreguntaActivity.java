@@ -31,6 +31,7 @@ public class PreguntaActivity extends AppCompatActivity {
     private RadioGroup radioGroupOpciones;
     private Button btnResponder;
     MediaPlayer mp;
+    List<String> selectedPlayers;
     private List<String> opciones;
     private int respuesta;
 
@@ -42,6 +43,7 @@ public class PreguntaActivity extends AppCompatActivity {
 
         // Obtener los datos de la pregunta seleccionada
         Intent intent = getIntent();
+        selectedPlayers = intent.getStringArrayListExtra("selectedPlayers");
         String cat = intent.getStringExtra("cat");
         Pregunta pregunta = intent.getParcelableExtra("pregunta");
 
@@ -79,6 +81,7 @@ public class PreguntaActivity extends AppCompatActivity {
                         Intent intent = new Intent(PreguntaActivity.this, ResultadoActivity.class);
                         intent.putExtra("answer", true);
                         intent.putExtra("cat",cat);
+                        intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
                         //pasar jugador
                         startActivity(intent);
                         finish();
@@ -88,6 +91,7 @@ public class PreguntaActivity extends AppCompatActivity {
                         Intent intent = new Intent(PreguntaActivity.this, ResultadoActivity.class);
                         intent.putExtra("answer", false);
                         intent.putExtra("cat",cat);
+                        intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
                         //pasar jugador
                         startActivity(intent);
                         finish();

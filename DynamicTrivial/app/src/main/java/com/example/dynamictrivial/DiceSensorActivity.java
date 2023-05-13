@@ -1,6 +1,7 @@
 package com.example.dynamictrivial;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 //import com.example.dynamictrivial.databinding.ActivityMainBinding;
@@ -21,8 +24,11 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
 
     ImageView diceImg;
     Button rollButton;
+    Button nextButton;
     Boolean pressed;
-    MediaPlayer mp;
+    MediaPlayer mpClick;
+    MediaPlayer mpDice;
+    List<String> selectedPlayers;
 
     //private MediaPlayer mediaPlayer;
 
@@ -38,8 +44,12 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dice_sensor);
-        mp = MediaPlayer.create(this, R.raw.dice_sound);
+        mpDice= MediaPlayer.create(this, R.raw.dice_sound);
         diceImg = findViewById(R.id.imageDice);
+
+        //pilla los selectedPlayers
+        Intent intent = getIntent();
+        selectedPlayers = intent.getStringArrayListExtra("selectedPlayers");
 
         rollDice();
         pressed = false;
@@ -55,11 +65,11 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
-        rollButton = (Button) findViewById(R.id.roll_button);
+        //rollButton = (Button) findViewById(R.id.roll_button);
         rollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                mpDice.start();
                 if (!pressed) {
                     rollDice();
                     /*mediaPlayer.start();
@@ -67,6 +77,18 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
                     mediaPlayer = null;*/
                     pressed = true;
                 }
+            }
+        });
+
+        nextButton = (Button) findViewById(R.id.btn_continue);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View view){
+                mpClick.start();
+                Intent intent = new Intent(DiceSensorActivity.this, DondeCaiActivity.class);
+                intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
+                startActivity(intent);
+                finish();
             }
         });
 

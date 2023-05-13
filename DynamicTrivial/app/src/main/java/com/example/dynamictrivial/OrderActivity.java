@@ -166,9 +166,11 @@ public class OrderActivity extends AppCompatActivity {
                         boolean dadoValue = dataSnapshot.getValue(Boolean.class);
                         if (dadoValue == true) {
                             Intent intent = new Intent(OrderActivity.this, DiceSensorActivity.class);
+                            intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
                             startActivity(intent);
                         } else {
                             Intent intent = new Intent(OrderActivity.this, DiceActivity.class);
+                            intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
                             startActivity(intent);
                         }
                     }

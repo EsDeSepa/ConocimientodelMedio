@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -27,10 +28,85 @@ public class ClasificacionActivity extends AppCompatActivity {
     private ArrayList<String> selectedPlayers;
     private int currentPlayerIndex = 0;
     private ArrayList<String> currentPlayerData;
-    //private Jugador playerNext;
     String currentPlayer = "jugador1";
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_clasificacion);
+        mp = MediaPlayer.create(this, R.raw.click_sound);
 
+        Intent intent = getIntent();
+        selectedPlayers = intent.getStringArrayListExtra("selectedPlayers");
+
+        LinearLayout layoutResumen = findViewById(R.id.layout_clasificacion);
+
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference().child("jugadores");
+
+        databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (String playerName : selectedPlayers) {
+                    Query jugadorQuery = databaseRef.orderByChild("nombre").equalTo(playerName);
+                    jugadorQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot jugadorSnapshot : dataSnapshot.getChildren()) {
+                                Map<String, Object> currentPlayerObj = (Map<String, Object>) jugadorSnapshot.getValue();
+
+                                TextView playerName = findViewById(R.id.jugador);
+                                playerName.setText(currentPlayerObj.get("nombre").toString());
+
+                                TextView puntosArte = new TextView(ClasificacionActivity.this);
+                                puntosArte.setText("Puntos de la categoría Arte: " + currentPlayerObj.get("puntosArte"));
+                                layoutResumen.addView(puntosArte);
+
+                                TextView puntosDeporte = new TextView(ClasificacionActivity.this);
+                                puntosDeporte.setText("Puntos de la categoría Deporte: " + currentPlayerObj.get("puntosDeporte"));
+                                layoutResumen.addView(puntosDeporte);
+
+                                TextView puntosEntretenimiento = new TextView(ClasificacionActivity.this);
+                                puntosEntretenimiento.setText("Puntos de la categoría Entretenimiento: " + currentPlayerObj.get("puntosEntretenimiento"));
+                                layoutResumen.addView(puntosEntretenimiento);
+
+                                TextView puntosGeografia = new TextView(ClasificacionActivity.this);
+                                puntosGeografia.setText("Puntos de la categoría Geografía: " + currentPlayerObj.get("puntosGeografia"));
+                                layoutResumen.addView(puntosGeografia);
+
+                                TextView puntosHistoria = new TextView(ClasificacionActivity.this);
+                                puntosHistoria.setText("Puntos de la categoría Historia: " + currentPlayerObj.get("puntosHistoria"));
+                                layoutResumen.addView(puntosHistoria);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            // Manejar el error en caso de que ocurra
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle possible errors
+            }
+        });
+
+        nextButton = findViewById(R.id.btn_continue);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mp.start();
+                Intent intent = new Intent(ClasificacionActivity.this, DiceActivity.class);
+                intent.putStringArrayListExtra("selectedPlayers", selectedPlayers);
+                startActivity(intent);
+
+            }
+        });
+    }
+}
+/*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,38 +169,9 @@ public class ClasificacionActivity extends AppCompatActivity {
                 // Manejar el error en caso de que ocurra
             }
         });
+*/
 
-        nextButton = findViewById(R.id.btn_continue);
-        //nextButton.setVisibility(View.INVISIBLE); // set the button to be invisible by default
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mp.start();
-
-                DatabaseReference dadoRef = FirebaseDatabase.getInstance().getReference().child("dado");
-                dadoRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        boolean dadoValue = dataSnapshot.getValue(Boolean.class);
-                        if (dadoValue == true) {
-                            Intent intent = new Intent(ClasificacionActivity.this, DiceSensorActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Intent intent = new Intent(ClasificacionActivity.this, DiceActivity.class);
-                            startActivity(intent);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        // Manejar el error en caso de que ocurra
-                    }
-                });
-            }
-        });
-
-    }
-
+    /*
     private void showPlayerData() {
         LinearLayout layoutResumen = findViewById(R.id.layout_clasificacion);
         layoutResumen.removeAllViews();
@@ -143,50 +190,6 @@ public class ClasificacionActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No hay más jugadores", Toast.LENGTH_SHORT).show();
         }
-    }
-
-
-/*
-        // get the player object from the Firebase JSON
-        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
-        databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                Map<String, Object> playersObj = (Map<String, Object>) map.get("jugadores");
-
-                for (String jugador: selectedPlayers){
-                    if (playersObj.containsKey(jugador)){
-                        Map<String, Object> currentPlayerObj = (Map<String, Object>) playersObj.get(currentPlayer);
-
-                        TextView puntosArte = new TextView(ClasificacionActivity.this);
-                        puntosArte.setText("Puntos de la categoría Arte: " + ((Integer) currentPlayerObj.get("puntosArte")).intValue());
-                        layoutResumen.addView(puntosArte);
-
-                        TextView puntosDeporte = new TextView(ClasificacionActivity.this);
-                        puntosDeporte.setText("Puntos de la categoría Arte: " + ((Integer) currentPlayerObj.get("puntosArte")).intValue());
-                        layoutResumen.addView(puntosDeporte);
-
-                        TextView puntosEntretenimiento = new TextView(ClasificacionActivity.this);
-                        puntosEntretenimiento.setText("Puntos de la categoría Arte: " + ((Integer) currentPlayerObj.get("puntosArte")).intValue());
-                        layoutResumen.addView(puntosEntretenimiento);
-
-                        TextView puntosGeografia = new TextView(ClasificacionActivity.this);
-                        puntosGeografia.setText("Puntos de la categoría Arte: " + ((Integer) currentPlayerObj.get("puntosArte")).intValue());
-                        layoutResumen.addView(puntosGeografia);
-
-                        TextView puntosHistoria = new TextView(ClasificacionActivity.this);
-                        puntosHistoria.setText("Puntos de la categoría Arte: " + ((Integer) currentPlayerObj.get("puntosArte")).intValue());
-                        layoutResumen.addView(puntosHistoria);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Handle possible errors
-            }
-        });
     }
 */
         /*
@@ -253,7 +256,3 @@ public class ClasificacionActivity extends AppCompatActivity {
         startActivity(intent);
     }
     */
-
-
-
-}

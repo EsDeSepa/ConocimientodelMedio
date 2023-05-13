@@ -25,7 +25,7 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
-            android:layout_height="229dp"
+            android:layout_height="50dp"
             app:srcCompat="@drawable/dynamictriviallogo" />
 
         <Space
@@ -51,18 +51,29 @@
             android:gravity="center"
             android:text="Dado" />
         <Button
+            android:id="@+id/clasif_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Clasificación" />
+        <Button
             android:id="@+id/order_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Orden" />
-
+        <Button
+            android:id="@+id/resumen_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Resumen" />
         <Button
             android:id="@+id/settings_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="settings" />
+            android:text="Settings" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

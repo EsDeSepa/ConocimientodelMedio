@@ -29,12 +29,17 @@ public class DondeCaiActivity extends AppCompatActivity {
     private String categoriaNext;
 
     MediaPlayer mp;
+    List<String> selectedPlayers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.donde_cai);
         mp = MediaPlayer.create(this, R.raw.click_sound);
+
+        //pilla los selectedPlayers
+        Intent intent = getIntent();
+        selectedPlayers = intent.getStringArrayListExtra("selectedPlayers");
 
         categoriasRef = FirebaseDatabase.getInstance().getReference().child("categorias");
         categoriasRef.addValueEventListener(new ValueEventListener() {
@@ -122,6 +127,7 @@ public class DondeCaiActivity extends AppCompatActivity {
     private void mostrarPregunta(Pregunta pregunta) {
         Intent intent = new Intent(this, PreguntaActivity.class);
         intent.putExtra("cat", categoriaNext);
+        intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
         //pasar jugador actual
         intent.putExtra("pregunta", pregunta);
         startActivity(intent);
