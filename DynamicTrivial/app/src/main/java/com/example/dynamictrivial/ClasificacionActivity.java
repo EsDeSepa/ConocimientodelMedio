@@ -179,6 +179,7 @@ public class ClasificacionActivity extends AppCompatActivity {
                 Intent intent = new Intent(ClasificacionActivity.this, DiceActivity.class);
                 intent.putStringArrayListExtra("selectedPlayers", selectedPlayers);
                 startActivity(intent);
+                finish();
 
             }
         });

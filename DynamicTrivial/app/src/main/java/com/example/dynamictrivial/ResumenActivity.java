@@ -106,6 +106,7 @@ public class ResumenActivity extends AppCompatActivity {
                 Intent intent = new Intent(ResumenActivity.this, ClasificacionActivity.class);
                 intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
                 startActivity(intent);
+                finish();
             }
         });
     }
