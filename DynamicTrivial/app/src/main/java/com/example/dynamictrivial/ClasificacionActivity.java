@@ -1,8 +1,13 @@
 package com.example.dynamictrivial;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -58,12 +63,18 @@ public class ClasificacionActivity extends AppCompatActivity {
                     int puntosGeografia = playerSnapshot.child("puntosGeografia").getValue(Integer.class);
                     int puntosHistoria = playerSnapshot.child("puntosHistoria").getValue(Integer.class);
 
-                    String playerInfo = "Nombre: " + playerName + "\n"
-                            + "Puntos de Arte: " + puntosArte + "\n"
-                            + "Puntos de Deporte: " + puntosDeporte + "\n"
-                            + "Puntos de Entretenimiento: " + puntosEntretenimiento + "\n"
-                            + "Puntos de Geografía: " + puntosGeografia + "\n"
-                            + "Puntos de Historia: " + puntosHistoria + "\n";
+                    // Crear el texto con el nombre en negrita
+                    SpannableStringBuilder playerInfo = new SpannableStringBuilder();
+                    playerInfo.append("NOMBRE: ");
+                    SpannableString playerNameSpannable = new SpannableString(playerName);
+                    playerNameSpannable.setSpan(new StyleSpan(Typeface.BOLD), 0, playerNameSpannable.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    playerInfo.append(playerNameSpannable);
+                    playerInfo.append("\n");
+                    playerInfo.append("Puntos de Arte: " + puntosArte + "\n");
+                    playerInfo.append("Puntos de Deporte: " + puntosDeporte + "\n");
+                    playerInfo.append("Puntos de Entretenimiento: " + puntosEntretenimiento + "\n");
+                    playerInfo.append("Puntos de Geografía: " + puntosGeografia + "\n");
+                    playerInfo.append("Puntos de Historia: " + puntosHistoria + "\n");
 
                     TextView playerTextView = new TextView(ClasificacionActivity.this);
                     playerTextView.setText(playerInfo);

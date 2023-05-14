@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -127,6 +128,30 @@ public class SettingsActivity extends AppCompatActivity {
 
                     // Remover el LinearLayout del jugador del LinearLayout principal
                     checkBoxPlayers.removeView(playerLayout);
+
+                    // Crear una referencia al nodo "jugadores" en la base de datos
+                    DatabaseReference jugadoresRef = FirebaseDatabase.getInstance().getReference().child("jugadores");
+
+                    // Obtener la referencia del jugador a eliminar
+                    Query jugadorAEliminar = jugadoresRef.orderByChild("nombre").equalTo(playerName);
+
+                    // Agregar un listener para obtener el snapshot del jugador a eliminar
+                    jugadorAEliminar.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    // Eliminar el jugador de la base de datos
+                                    snapshot.getRef().removeValue();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // Manejo del error
+                        }
+                    });
                 }
             };
 
@@ -182,20 +207,6 @@ public class SettingsActivity extends AppCompatActivity {
                     // Mostrar mensaje de ningún jugador seleccionado y volver a la actividad actual
                     Toast.makeText(SettingsActivity.this, "¡No se ha seleccionado ningún jugador! Selecciona al menos uno.", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
-        nextButton = findViewById(R.id.btn_continue);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mp.start();
-                // Mostrar mensaje de jugadores seleccionados y seguir
-                Toast.makeText(SettingsActivity.this, "¡Jugadores añadidos!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(SettingsActivity.this, OrderActivity.class);
-                intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
-                startActivity(intent);
-                finish();
             }
         });
 

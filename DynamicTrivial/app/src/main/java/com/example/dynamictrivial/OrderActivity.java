@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Array;
@@ -42,24 +43,44 @@ public class OrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order);
 
         btnContinuar = findViewById(R.id.btn_continue);
+        btnContinuar.setVisibility(View.INVISIBLE);
         mp = MediaPlayer.create(this, R.raw.click_sound);
 
         Intent intent = getIntent();
         selectedPlayers = intent.getStringArrayListExtra("selectedPlayers");
-        /*
-        testSubjects.add("pepe");
-        testSubjects.add("paco");
-        testSubjects.add("pedro");
-        */
+
+        //ELIMINAR LOS JUGADORES QUE NO HAYAN SIDO ELEGIDOS DE LA BBDD
+        // Crear una referencia al nodo "jugadores" en la base de datos
+        DatabaseReference jugadoresRef = FirebaseDatabase.getInstance().getReference().child("jugadores");
+        // Obtener todos los jugadores de la base de datos
+        jugadoresRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot jugadorSnapshot : dataSnapshot.getChildren()) {
+                    String nombre = jugadorSnapshot.child("nombre").getValue(String.class);
+                    if (!selectedPlayers.contains(nombre)) {
+                        // El jugador no está en la lista de selectedPlayers, eliminarlo
+                        jugadorSnapshot.getRef().removeValue();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Manejo del error
+            }
+        });
+
         LinearLayout orderLayout = findViewById(R.id.order_layout);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference orderDatabase = FirebaseDatabase.getInstance().getReference().child("orden");
+        orderDatabase.removeValue();
 
         mDatabase.child("jugadores").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 jugadores = new ArrayList<>();
                 for (DataSnapshot jugadorSnapshot : dataSnapshot.getChildren()) {
+
                     String jugadorId = jugadorSnapshot.getKey();
                     String nombre = jugadorSnapshot.child("nombre").getValue(String.class);
                     if (selectedPlayers.contains(nombre)) {
@@ -67,14 +88,9 @@ public class OrderActivity extends AppCompatActivity {
                         TextView nameView = new TextView(getApplicationContext());
                         nameView.setText(nombre);
                         orderLayout.addView(nameView);
-                    }
+                    }else{
 
-                    /*
-                    jugadores.add(jugadorId);
-                    TextView nameView = new TextView(getApplicationContext());
-                    nameView.setText(nombre);
-                    orderLayout.addView(nameView);
-                     */
+                    }
                 }
             }
 
@@ -84,13 +100,6 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
-/*
-        for (int i = 0; i<testSubjects.size(); i++) {
-            TextView nameView = new TextView(this);
-            nameView.setText(testSubjects.get(i));
-            orderLayout.addView(nameView);
-        }
-*/
         Button shuffleButton = (Button) findViewById(R.id.shuffle_button);
         shuffleButton.setOnClickListener(new View.OnClickListener() {
 
@@ -133,6 +142,9 @@ public class OrderActivity extends AppCompatActivity {
                         }
                     });
                 }
+
+                // Show the btnContinuar button
+                btnContinuar.setVisibility(View.VISIBLE);
             }
         });
         Button nextButton = (Button) findViewById(R.id.btn_continue);

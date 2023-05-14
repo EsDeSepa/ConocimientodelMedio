@@ -83,15 +83,18 @@ public class ResultadoActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             // Get the current value of puntos
-                            int puntos = dataSnapshot.child("puntos" + categoriaMayus).getValue(Integer.class);
+                            Integer puntos = dataSnapshot.child("puntos" + categoriaMayus).getValue(Integer.class);
+                            if (puntos != null) {
+                                int puntosActual = puntos.intValue();
+                                puntosActual++;
 
-                            // Increase puntos by 1
-                            puntos++;
-
-                            // Update puntos in the database
-                            Map<String, Object> childUpdates = new HashMap<>();
-                            childUpdates.put("puntos" + categoriaMayus, puntos);
-                            jugadorActual.updateChildren(childUpdates);
+                                Map<String, Object> childUpdates = new HashMap<>();
+                                childUpdates.put("puntos" + categoriaMayus, puntosActual);
+                                jugadorActual.updateChildren(childUpdates);
+                            } else {
+                                // Manejar el caso en el que el valor de puntos sea nulo
+                                System.out.println("El valor de puntos es nulo");
+                            }
                         }
 
                         @Override
