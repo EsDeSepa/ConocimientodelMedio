@@ -79,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         Toast.makeText(RegisterActivity.this, "Successful Registered", Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(RegisterActivity.this, StartupActivity.class);
+                                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                                         startActivity(intent);
                                                         finish();
                                                     }
@@ -148,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         }
     }
-
+/*
     public void onStart() {
         super.onStart();
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
@@ -156,6 +156,6 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
+*/
 
 }
