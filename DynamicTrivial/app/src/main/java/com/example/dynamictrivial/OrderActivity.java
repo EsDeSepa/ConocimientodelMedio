@@ -168,10 +168,12 @@ public class OrderActivity extends AppCompatActivity {
                             Intent intent = new Intent(OrderActivity.this, DiceSensorActivity.class);
                             intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
                             startActivity(intent);
+                            finish();
                         } else {
                             Intent intent = new Intent(OrderActivity.this, DiceActivity.class);
                             intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
                             startActivity(intent);
+                            finish();
                         }
                     }
 

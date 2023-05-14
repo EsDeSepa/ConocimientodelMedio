@@ -29,6 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Switch switch1;
     DatabaseReference dadoRef;
     Button nextButton;
+    Button nuevoPlayerButton;
     MediaPlayer mp;
     List<String> selectedPlayers;
 
@@ -76,14 +77,58 @@ public class SettingsActivity extends AppCompatActivity {
                 for (DataSnapshot jugadorSnapshot : dataSnapshot.getChildren()) {
                     // Obtener el nombre de cada jugador
                     String nombre = jugadorSnapshot.child("nombre").getValue(String.class);
-
+                    /*
                     // Mostrar el nombre del jugador y agregar por cada uno un CheckBox al LinearLayout
                     CheckBox checkBox = new CheckBox(SettingsActivity.this);
                     checkBox.setText(nombre);
                     checkBox.setOnCheckedChangeListener(checkBoxListener);
                     checkBoxPlayers.addView(checkBox);
+                    */
+
+                    // Crear un LinearLayout horizontal para contener el CheckBox y el botón de borrado
+                    LinearLayout playerLayout = new LinearLayout(SettingsActivity.this);
+                    playerLayout.setOrientation(LinearLayout.HORIZONTAL);
+                    playerLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+                    CheckBox checkBox = new CheckBox(SettingsActivity.this);
+                    checkBox.setText(nombre);
+                    checkBox.setOnCheckedChangeListener(checkBoxListener);
+                    LinearLayout.LayoutParams checkBoxParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    checkBoxParams.setMarginEnd(15); // Margen en píxeles
+                    checkBox.setLayoutParams(checkBoxParams);
+                    playerLayout.addView(checkBox);
+
+                    // Crear el botón de borrado para el jugador
+                    Button deleteButton = new Button(SettingsActivity.this);
+                    deleteButton.setText("Borrar");
+                    LinearLayout.LayoutParams deleteButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    deleteButtonParams.setMarginStart(15); // Margen en píxeles
+                    deleteButton.setLayoutParams(deleteButtonParams);
+                    deleteButton.setOnClickListener(deleteButtonListener);
+                    playerLayout.addView(deleteButton);
+
+                    // Agregar el LinearLayout al LinearLayout principal
+                    checkBoxPlayers.addView(playerLayout);
                 }
             }
+
+            private View.OnClickListener deleteButtonListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Obtener el LinearLayout padre del botón de borrado
+                    LinearLayout playerLayout = (LinearLayout) v.getParent();
+
+                    // Obtener el nombre del jugador del CheckBox dentro del LinearLayout
+                    CheckBox checkBox = (CheckBox) playerLayout.getChildAt(0);
+                    String playerName = checkBox.getText().toString();
+
+                    // Quitar el jugador de la lista de jugadores seleccionados
+                    selectedPlayers.remove(playerName);
+
+                    // Remover el LinearLayout del jugador del LinearLayout principal
+                    checkBoxPlayers.removeView(playerLayout);
+                }
+            };
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -140,6 +185,33 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        nextButton = findViewById(R.id.btn_continue);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mp.start();
+                // Mostrar mensaje de jugadores seleccionados y seguir
+                Toast.makeText(SettingsActivity.this, "¡Jugadores añadidos!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(SettingsActivity.this, OrderActivity.class);
+                intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        nuevoPlayerButton = findViewById(R.id.btn_add_player);
+        nuevoPlayerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mp.start();
+                // Mostrar mensaje de jugadores seleccionados y seguir
+                Toast.makeText(SettingsActivity.this, "Añade nuevos jugadores", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(SettingsActivity.this, NuevoJugadorActivity.class);
+                intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {

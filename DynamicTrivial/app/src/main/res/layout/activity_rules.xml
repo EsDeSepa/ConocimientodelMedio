@@ -7,16 +7,20 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <TextView
+        android:id="@+id/logo_textview"
         android:layout_width="wrap_content"
-        android:layout_height="125dp"
-        android:layout_margin="50dp"
+        android:layout_height="wrap_content"
+        android:text="Dynamic Trivial"
+        android:textSize="25sp"
         android:padding="10dp"
         android:gravity="center"
-        app:srcCompat="@drawable/dynamictriviallogo"
-        tools:ignore="MissingConstraints" />
-
+        android:fontFamily="sans-serif"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/rules_layout" />
 
     <LinearLayout
         android:id="@+id/rules_layout"
@@ -33,7 +37,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/title_textview"
+            android:id="@+id/ajuste_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ajustes del juego"
@@ -72,9 +76,11 @@
                     android:id="@+id/btnDado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:layout_below="@id/switches_layout"
                     android:switchMinWidth="60dp"
-                    android:layout_marginTop="8dp" />
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="20dp"/>
 
                 <LinearLayout
                     android:id="@+id/check_layout"
@@ -86,140 +92,37 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Participantes:"
                         android:textSize="15sp"
                         android:gravity="center"/>
 
-
                 </LinearLayout>
 
-
-                <!--
-                <CheckBox
-                    android:id="@+id/check_box_players"
+                <Button
+                    android:id="@+id/btn_add_player"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/switches_layout"
-                    android:layout_marginTop="16dp"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp">
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_below="@id/switches_layout"
+                    android:layout_marginBottom="16dp"
+                    android:text="Añadir jugador" />
 
-                </CheckBox>
-                -->
                 <Button
                     android:id="@+id/btn_continue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_below="@id/switches_layout"
-                    android:layout_marginBottom="32dp"
+                    android:layout_marginBottom="15dp"
                     android:text="Continuar"/>
 
             </LinearLayout>
-            <!--
 
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Categoria 3"
-                                android:textColor="#00CC00"/>
-
-                            <Switch
-                                android:id="@+id/cat3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:switchMinWidth="60dp"
-                                android:layout_marginTop="8dp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Categoria 4"
-                                android:textColor="#CC00CC"/>
-
-                            <Switch
-                                android:id="@+id/cat4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:switchMinWidth="60dp"
-                                android:layout_marginTop="8dp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Categoria 5"
-                                android:textColor="#CCCC00"/>
-
-                            <Switch
-                                android:id="@+id/cat5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:switchMinWidth="60dp"
-                                android:layout_marginTop="8dp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="MAS AJUSTES"
-                            android:textColor="#000000"/>
-
-                        <Switch
-                            android:id="@+id/switchOtro"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:switchMinWidth="60dp"
-                            android:layout_marginTop="8dp" />
-
-                    -->
         </LinearLayout>
 
     </LinearLayout>
