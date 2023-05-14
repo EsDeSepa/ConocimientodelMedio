@@ -66,10 +66,9 @@ public class ResultadoActivity extends AppCompatActivity {
             TextView textView = new TextView(this);
             textView.setText("¡Correcto! Acertaste la pregunta de la categoría " + categoriaMayus);
             layout.addView(textView,2);
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference currentPlayer = database.getReference().child("jugadorActual");
+            DatabaseReference currentPlayer = FirebaseDatabase.getInstance().getReference().child("jugadorActual");
 
-// Add a listener to get the current player's name
+            // Add a listener to get the current player's name
             currentPlayer.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

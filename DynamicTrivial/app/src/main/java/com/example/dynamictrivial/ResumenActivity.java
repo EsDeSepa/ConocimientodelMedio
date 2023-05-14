@@ -33,7 +33,6 @@ public class ResumenActivity extends AppCompatActivity {
     MediaPlayer mp;
     private Jugador playerNext;
     List<String> selectedPlayers;
-    String currentPlayer = "jugador1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,36 +45,48 @@ public class ResumenActivity extends AppCompatActivity {
         selectedPlayers = intent.getStringArrayListExtra("selectedPlayers");
 
         // get the player object from the Firebase JSON
-        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
-        databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference currentPlayerObj = FirebaseDatabase.getInstance().getReference().child("jugadorActual");
+        currentPlayerObj.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                Map<String, Object> playersObj = (Map<String, Object>) map.get("jugadores");
-                Map<String, Object> currentPlayerObj = (Map<String, Object>) playersObj.get(currentPlayer);
+                String currentPlayer = dataSnapshot.getValue(String.class);
+                DatabaseReference players = FirebaseDatabase.getInstance().getReference().child("jugadores");
+                DatabaseReference currentPlayerRef = players.child(currentPlayer);
 
-                TextView playerName = findViewById(R.id.jugador);
-                playerName.setText(currentPlayerObj.get("nombre").toString());
+                currentPlayerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Map<String, Object> currentPlayerObj = (Map<String, Object>) dataSnapshot.getValue();
 
-                TextView puntosArte = new TextView(ResumenActivity.this);
-                puntosArte.setText("Puntos de la categoría Arte: " + ((Long) currentPlayerObj.get("puntosArte")).intValue());
-                layoutResumen.addView(puntosArte,1);
+                        TextView playerName = findViewById(R.id.jugador);
+                        playerName.setText(currentPlayerObj.get("nombre").toString());
 
-                TextView puntosDeporte = new TextView(ResumenActivity.this);
-                puntosDeporte.setText("Puntos de la categoría Deporte: " + ((Long) currentPlayerObj.get("puntosDeporte")).intValue());
-                layoutResumen.addView(puntosDeporte,2);
+                        TextView puntosArte = new TextView(ResumenActivity.this);
+                        puntosArte.setText("Puntos de la categoría Arte: " + currentPlayerObj.get("puntosArte"));
+                        layoutResumen.addView(puntosArte,1);
 
-                TextView puntosEntretenimiento = new TextView(ResumenActivity.this);
-                puntosEntretenimiento.setText("Puntos de la categoría Entretenimiento: " + ((Long) currentPlayerObj.get("puntosEntretenimiento")).intValue());
-                layoutResumen.addView(puntosEntretenimiento,3);
+                        TextView puntosDeporte = new TextView(ResumenActivity.this);
+                        puntosDeporte.setText("Puntos de la categoría Deporte: " + currentPlayerObj.get("puntosDeporte"));
+                        layoutResumen.addView(puntosDeporte,2);
 
-                TextView puntosGeografia = new TextView(ResumenActivity.this);
-                puntosGeografia.setText("Puntos de la categoría Geografía: " + ((Long) currentPlayerObj.get("puntosGeografia")).intValue());
-                layoutResumen.addView(puntosGeografia,4);
+                        TextView puntosEntretenimiento = new TextView(ResumenActivity.this);
+                        puntosEntretenimiento.setText("Puntos de la categoría Entretenimiento: " + currentPlayerObj.get("puntosEntretenimiento"));
+                        layoutResumen.addView(puntosEntretenimiento,3);
 
-                TextView puntosHistoria = new TextView(ResumenActivity.this);
-                puntosHistoria.setText("Puntos de la categoría Historia: " + ((Long) currentPlayerObj.get("puntosHistoria")).intValue());
-                layoutResumen.addView(puntosHistoria,5);
+                        TextView puntosGeografia = new TextView(ResumenActivity.this);
+                        puntosGeografia.setText("Puntos de la categoría Geografía: " + currentPlayerObj.get("puntosGeografia"));
+                        layoutResumen.addView(puntosGeografia,4);
+
+                        TextView puntosHistoria = new TextView(ResumenActivity.this);
+                        puntosHistoria.setText("Puntos de la categoría Historia: " + currentPlayerObj.get("puntosHistoria"));
+                        layoutResumen.addView(puntosHistoria,5);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Handle possible errors
+                    }
+                });
             }
 
             @Override
@@ -83,6 +94,8 @@ public class ResumenActivity extends AppCompatActivity {
                 // Handle possible errors
             }
         });
+
+
 
         nextButton = findViewById(R.id.btn_continue);
         //nextButton.setVisibility(View.INVISIBLE); // set the button to be invisible by default

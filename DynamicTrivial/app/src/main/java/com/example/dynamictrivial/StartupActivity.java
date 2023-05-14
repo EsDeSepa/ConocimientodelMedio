@@ -104,5 +104,16 @@ public class StartupActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Button mainButton = (Button) findViewById(R.id.main_button);
+        mainButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // do something when the TextView is clicked
+                mp.start();
+                Intent intent = new Intent(StartupActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
