@@ -57,7 +57,6 @@
             app:layout_constraintBottom_toTopOf="@+id/ajustes_layout"
             android:orientation="horizontal">
 
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,7 +75,6 @@
                     android:id="@+id/btnDado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_below="@id/switches_layout"
                     android:switchMinWidth="60dp"
                     android:layout_marginTop="8dp"
@@ -125,8 +123,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_below="@id/switches_layout"
-                    android:layout_marginBottom="15dp"
                     android:text="Continuar"/>
 
             </LinearLayout>

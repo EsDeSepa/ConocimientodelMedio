@@ -112,6 +112,7 @@ public class OrderActivity extends AppCompatActivity {
                     });
                 }
                 btnContinuar.setVisibility(View.VISIBLE);
+                shuffleButton.setVisibility(View.INVISIBLE);
             }
         });
         Button nextButton = (Button) findViewById(R.id.btn_continue);

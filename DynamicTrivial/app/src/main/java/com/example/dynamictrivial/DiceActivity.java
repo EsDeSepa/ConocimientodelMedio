@@ -72,6 +72,7 @@ public class DiceActivity extends AppCompatActivity {
                     rollDice();
                     pressed = true;
                     nextButton.setVisibility(View.VISIBLE);
+                    rollButton.setVisibility(View.INVISIBLE);
                 }
             }
         });
