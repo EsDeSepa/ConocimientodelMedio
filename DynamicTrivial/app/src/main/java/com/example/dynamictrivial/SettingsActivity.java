@@ -3,11 +3,14 @@ package com.example.dynamictrivial;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -86,30 +89,41 @@ public class SettingsActivity extends AppCompatActivity {
                     checkBoxPlayers.addView(checkBox);
                     */
 
-                    // Crear un LinearLayout horizontal para contener el CheckBox y el botón de borrado
+                    ScrollView scrollView = findViewById(R.id.scrollCheck);
+                    LinearLayout.LayoutParams checkBoxParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+                    checkBoxParams.setMarginEnd(15); // Margen en píxeles
+
+                    // Crear un LinearLayout secundario para contener cada CheckBox y su botón de borrado
                     LinearLayout playerLayout = new LinearLayout(SettingsActivity.this);
                     playerLayout.setOrientation(LinearLayout.HORIZONTAL);
-                    playerLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    playerLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    ));
 
                     CheckBox checkBox = new CheckBox(SettingsActivity.this);
                     checkBox.setText(nombre);
                     checkBox.setOnCheckedChangeListener(checkBoxListener);
-                    LinearLayout.LayoutParams checkBoxParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    checkBoxParams.setMarginEnd(15); // Margen en píxeles
                     checkBox.setLayoutParams(checkBoxParams);
                     playerLayout.addView(checkBox);
 
                     // Crear el botón de borrado para el jugador
                     Button deleteButton = new Button(SettingsActivity.this);
                     deleteButton.setText("Borrar");
-                    LinearLayout.LayoutParams deleteButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    LinearLayout.LayoutParams deleteButtonParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
                     deleteButtonParams.setMarginStart(15); // Margen en píxeles
                     deleteButton.setLayoutParams(deleteButtonParams);
                     deleteButton.setOnClickListener(deleteButtonListener);
                     playerLayout.addView(deleteButton);
 
-                    // Agregar el LinearLayout al LinearLayout principal
-                    checkBoxPlayers.addView(playerLayout);
+                    // Agregar el LinearLayout secundario al LinearLayout principal
+                    ((LinearLayout) scrollView.getChildAt(0)).addView(playerLayout);
                 }
             }
 
