@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -98,6 +99,7 @@ public class NuevoJugadorActivity extends AppCompatActivity {
                                     jugadorRef.child("puntosEntretenimiento").setValue(0);
                                     jugadorRef.child("puntosGeografia").setValue(0);
                                     jugadorRef.child("puntosHistoria").setValue(0);
+                                    jugadorRef.child("turno").setValue(1);
 
 
                                     List<Integer> turnos = new ArrayList<>();
@@ -122,7 +124,7 @@ public class NuevoJugadorActivity extends AppCompatActivity {
                                     jugadorRef.child("puntosEntretenimiento").setValue(0);
                                     jugadorRef.child("puntosGeografia").setValue(0);
                                     jugadorRef.child("puntosHistoria").setValue(0);
-                                    //jugadorRef.child("turno").setValue(1);
+                                    jugadorRef.child("turno").setValue(1);
                                 }
 
                                 // Agrega el nombre del jugador a la lista selectedPlayers
@@ -132,6 +134,38 @@ public class NuevoJugadorActivity extends AppCompatActivity {
                                 intent.putExtra("selectedPlayers", selectedPlayers);
                                 nuevoPlayerEditText.setText("");
                                 Toast.makeText(NuevoJugadorActivity.this, "Jugador añadido", Toast.LENGTH_SHORT).show();
+                            }else {
+                                // No hay jugadores existentes, crea el nodo "jugadores" y el jugador1
+                                DatabaseReference jugadoresNodeRef = mDatabase.child("jugadores");
+                                jugadoresNodeRef.setValue(true, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                        if (error == null) {
+                                            String jugadorId = "jugador1";
+                                            DatabaseReference jugadorRef = jugadoresNodeRef.child(jugadorId);
+
+                                            // Establece los datos del nuevo jugador en el nodo correspondiente
+                                            jugadorRef.child("nombre").setValue(nuevoPlayerNombre);
+                                            jugadorRef.child("puntosArte").setValue(0);
+                                            jugadorRef.child("puntosDeporte").setValue(0);
+                                            jugadorRef.child("puntosEntretenimiento").setValue(0);
+                                            jugadorRef.child("puntosGeografia").setValue(0);
+                                            jugadorRef.child("puntosHistoria").setValue(0);
+                                            jugadorRef.child("turno").setValue(1);
+
+                                            // Agrega el nombre del jugador a la lista selectedPlayers
+                                            // Actualiza el intent con la lista selectedPlayers
+                                            // Limpiar el EditText después de agregar el jugador
+                                            selectedPlayers.add(nuevoPlayerNombre);
+                                            intent.putExtra("selectedPlayers", selectedPlayers);
+                                            nuevoPlayerEditText.setText("");
+                                            Toast.makeText(NuevoJugadorActivity.this, "Jugador añadido", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            // Manejar el error al crear el nodo "jugadores"
+                                            Toast.makeText(NuevoJugadorActivity.this, "Error al crear el nodo 'jugadores'", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
                             }
                         }
 
