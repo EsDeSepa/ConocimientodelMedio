@@ -46,18 +46,6 @@ public class StartupActivity extends AppCompatActivity {
 
             }
         });
-        Button diceButton = (Button) findViewById(R.id.dice_button);
-        diceButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // do something when the TextView is clicked
-                mp.start();
-                Intent intent = new Intent(StartupActivity.this, DiceActivity.class);
-                startActivity(intent);
-
-            }
-        });
         Button clasif = (Button) findViewById(R.id.clasif_button);
         clasif.setOnClickListener(new View.OnClickListener() {
 
@@ -70,29 +58,6 @@ public class StartupActivity extends AppCompatActivity {
             }
         });
 
-        Button orderButton = (Button) findViewById(R.id.order_button);
-        orderButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // do something when the TextView is clicked
-                mp.start();
-                Intent intent = new Intent(StartupActivity.this, OrderActivity.class);
-                startActivity(intent);
-
-            }
-        });
-        Button resumenButton = (Button) findViewById(R.id.resumen_button);
-        resumenButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // do something when the TextView is clicked
-                mp.start();
-                Intent intent = new Intent(StartupActivity.this, ResumenActivity.class);
-                startActivity(intent);
-            }
-        });
         Button settingsButton = (Button) findViewById(R.id.settings_button);
         settingsButton.setOnClickListener(new View.OnClickListener() {
 
