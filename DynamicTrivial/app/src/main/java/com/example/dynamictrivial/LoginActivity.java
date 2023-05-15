@@ -10,16 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-//import com.example.dynamictrivial.databinding.ActivityMainBinding;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText txtemail, txtpassoword;
@@ -36,16 +32,13 @@ public class LoginActivity extends AppCompatActivity {
         txtpassoword = findViewById(R.id.password_login_edittext);
         login_btn = findViewById(R.id.login_button);
         mAuth = FirebaseAuth.getInstance();
-
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mp.start();
-
                 if (!validateEmail() | !validatePassword()) {
                     return;
                 }
-
                 mAuth.signInWithEmailAndPassword(loginemail,loginpassword).addOnCompleteListener(
                         new OnCompleteListener<AuthResult>() {
                             @Override
@@ -57,30 +50,25 @@ public class LoginActivity extends AppCompatActivity {
                                     finish();
                                 }else{
                                     Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-
                                 }
                             }
                         }
                 );
-
-
             }
         });
 
         TextView loginLink = findViewById(R.id.login_textview);
         loginLink.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 mp.start();
-                // do something when the TextView is clicked
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
-
     }
+
     private boolean validateEmail() {
         loginemail = txtemail.getText().toString().trim();
         if (TextUtils.isEmpty(loginemail)) {
@@ -93,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
     }
+
     private boolean validatePassword() {
         loginpassword = txtpassoword.getText().toString().trim();
         if (TextUtils.isEmpty(loginpassword)) {
@@ -102,6 +91,5 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
     }
-
 
 }

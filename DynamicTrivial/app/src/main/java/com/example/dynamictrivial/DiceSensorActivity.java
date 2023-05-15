@@ -12,19 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-//import com.example.dynamictrivial.databinding.ActivityMainBinding;
 
 public class DiceSensorActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -37,14 +32,12 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
     MediaPlayer mpClick;
     MediaPlayer mpDice;
 
-
+    // Sensor variable declarations
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private long lastUpdate = 0;
     private float last_x, last_y, last_z;
     private static final int SHAKE_THRESHOLD = 1000;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,43 +49,30 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
         rollDice();
         pressed = false;
         currentPlayerTextView = findViewById(R.id.current_player);
-        //pilla los selectedPlayers
         Intent intent = getIntent();
         selectedPlayers = intent.getStringArrayListExtra("selectedPlayers");
 
+        // Get current player name
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        // Get a reference to the "jugadorActual" value in the Firebase database
         database.getReference("jugadorActual").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get the current player's ID from the dataSnapshot
                 String currentPlayerId = dataSnapshot.getValue(String.class);
-
-                // Use the current player's ID to retrieve their "nombre" field from the "jugadores" object
                 database.getReference("jugadores/" + currentPlayerId + "/nombre").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        // Get the current player's name from the dataSnapshot
                         String currentPlayerName = dataSnapshot.getValue(String.class);
-
-                        // Set the current player's name in the TextView
                         currentPlayerTextView.setText(currentPlayerName);
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        // Handle database errors here
                     }
                 });
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Handle database errors here
             }
         });
-
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -112,6 +92,7 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
             }
         });
 
+        // Button click
         nextButton = (Button) findViewById(R.id.next_button);
         nextButton.setVisibility(View.INVISIBLE);
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -123,13 +104,10 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
                 finish();
             }
         });
-
-
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             long curTime = System.currentTimeMillis();
             if ((curTime - lastUpdate) > 100) {
@@ -142,14 +120,13 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
 
                 float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
 
+                // Sensor movement detected
                 if (speed > SHAKE_THRESHOLD) {
                     if (!pressed) {
                         mpDice.start();
                         rollDice();
-
                         pressed = true;
                         nextButton.setVisibility(View.VISIBLE);
-
                     }
                 }
                 last_x = x;
@@ -167,13 +144,11 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
-
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
     }
 
     @Override
@@ -182,11 +157,9 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
-
     public void rollDice() {
         int diceValue = new Random().nextInt(6) + 1;
         int res = getResources().getIdentifier("dice" + diceValue, "drawable", "com.example.dynamictrivial");
-
         diceImg.setImageResource(res);
     }
 }

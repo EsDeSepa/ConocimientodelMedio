@@ -7,25 +7,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-//import com.example.dynamictrivial.databinding.ActivityMainBinding;
 
 public class OrderActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
@@ -41,32 +32,26 @@ public class OrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-
         btnContinuar = findViewById(R.id.btn_continue);
         btnContinuar.setVisibility(View.INVISIBLE);
         mp = MediaPlayer.create(this, R.raw.click_sound);
-
         Intent intent = getIntent();
         selectedPlayers = intent.getStringArrayListExtra("selectedPlayers");
-
-        //ELIMINAR LOS JUGADORES QUE NO HAYAN SIDO ELEGIDOS DE LA BBDD
-        // Crear una referencia al nodo "jugadores" en la base de datos
+        // Delete players from the database that haven't been chosen
         DatabaseReference jugadoresRef = FirebaseDatabase.getInstance().getReference().child("jugadores");
-        // Obtener todos los jugadores de la base de datos
         jugadoresRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot jugadorSnapshot : dataSnapshot.getChildren()) {
                     String nombre = jugadorSnapshot.child("nombre").getValue(String.class);
                     if (!selectedPlayers.contains(nombre)) {
-                        // El jugador no está en la lista de selectedPlayers, eliminarlo
+                        // If the player is missing from selectedPlayers, delete it
                         jugadorSnapshot.getRef().removeValue();
                     }
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Manejo del error
             }
         });
 
@@ -74,13 +59,11 @@ public class OrderActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference orderDatabase = FirebaseDatabase.getInstance().getReference().child("orden");
         orderDatabase.removeValue();
-
         mDatabase.child("jugadores").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 jugadores = new ArrayList<>();
                 for (DataSnapshot jugadorSnapshot : dataSnapshot.getChildren()) {
-
                     String jugadorId = jugadorSnapshot.getKey();
                     String nombre = jugadorSnapshot.child("nombre").getValue(String.class);
                     if (selectedPlayers.contains(nombre)) {
@@ -89,41 +72,28 @@ public class OrderActivity extends AppCompatActivity {
                         nameView.setText(nombre);
                         orderLayout.addView(nameView);
                     }else{
-
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
 
         Button shuffleButton = (Button) findViewById(R.id.shuffle_button);
         shuffleButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 mp.start();
-                // Shuffle the array list containing the test subjects
                 Collections.shuffle(jugadores);
-
-                // Find the LinearLayout that contains the TextViews
                 LinearLayout orderLayout = findViewById(R.id.order_layout);
-
-                // Remove all existing TextViews from the layout
                 orderLayout.removeAllViews();
-
                 for (int i = 0; i < jugadores.size(); i++) {
                     String jugadorId = jugadores.get(i);
                     int turno = i + 1;
                     orderDatabase.child(String.valueOf(i)).setValue(jugadorId);
                     mDatabase.child("jugadores").child(jugadorId).child("turno").setValue(turno);
                 }
-
-
-                // Add new TextViews to the layout in the shuffled order
                 for (int i = 0; i < jugadores.size(); i++) {
                     String jugadorId = jugadores.get(i);
                     TextView nameView = new TextView(OrderActivity.this);
@@ -136,14 +106,11 @@ public class OrderActivity extends AppCompatActivity {
                             nameView.setText(nombre);
                             orderLayout.addView(nameView);
                         }
-
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                         }
                     });
                 }
-
-                // Show the btnContinuar button
                 btnContinuar.setVisibility(View.VISIBLE);
             }
         });
@@ -151,23 +118,15 @@ public class OrderActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // do something when the TextView is clicked
                 mp.start();
-
-                // Update the "jugadorActual" field in the database with the corresponding "jugadorId" value
-                // Assuming the first player is the current player
                 DatabaseReference jugadorActual = FirebaseDatabase.getInstance().getReference().child("jugadorActual");
                 jugadorActual.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        // Get the current player's name
                         jugadorActual.setValue(jugadores.get(0));
-
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        // Handle possible errors
                     }
                 });
 
@@ -188,10 +147,8 @@ public class OrderActivity extends AppCompatActivity {
                             finish();
                         }
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        // Manejar el error en caso de que ocurra
                     }
                 });
             }
