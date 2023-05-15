@@ -114,6 +114,13 @@
             android:theme="@style/Theme.DynamicTrivial">
 
         </activity>
+        <activity
+            android:name=".VictoryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.DynamicTrivial">
+
+        </activity>
     </application>
 
 </manifest>

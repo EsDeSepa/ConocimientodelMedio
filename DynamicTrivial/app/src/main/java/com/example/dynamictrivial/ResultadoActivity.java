@@ -3,6 +3,7 @@ package com.example.dynamictrivial;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -79,11 +80,13 @@ public class ResultadoActivity extends AppCompatActivity {
                     DatabaseReference jugadorActual = FirebaseDatabase.getInstance().getReference().child("jugadores").child(playerName);
 
                     // Add a listener to get the current player's points
+
                     jugadorActual.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             // Get the current value of puntos
                             Integer puntos = dataSnapshot.child("puntos" + categoriaMayus).getValue(Integer.class);
+
                             if (puntos != null) {
                                 int puntosActual = puntos.intValue();
                                 puntosActual++;

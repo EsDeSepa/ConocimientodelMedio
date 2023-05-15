@@ -19,18 +19,22 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     private Button mButtonShowPopup;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mp = MediaPlayer.create(this, R.raw.click_sound);
+
         Button settingsButton = (Button) findViewById(R.id.settings_button);
         settingsButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // do something when the TextView is clicked
-
+                mp.start();
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
             }
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         mButtonShowPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mp.start();
                 showPopup();
             }
         });

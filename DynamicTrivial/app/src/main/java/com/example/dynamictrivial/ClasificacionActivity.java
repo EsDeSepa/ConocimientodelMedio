@@ -36,6 +36,8 @@ public class ClasificacionActivity extends AppCompatActivity {
     private ArrayList<String> selectedPlayers;
     private int currentPlayerIndex = 0;
     private ArrayList<String> currentPlayerData;
+    private Boolean winCondition = false;
+    private String winnningPlayer;
 
 
     @Override
@@ -79,6 +81,10 @@ public class ClasificacionActivity extends AppCompatActivity {
                     TextView playerTextView = new TextView(ClasificacionActivity.this);
                     playerTextView.setText(playerInfo);
                     playersLayout.addView(playerTextView);
+                    if (puntosArte >= 1 && puntosDeporte >=1 && puntosEntretenimiento >=1 && puntosGeografia >=1 && puntosHistoria>=1) {
+                        winCondition = true;
+                        winnningPlayer = playerName;
+                    }
                 }
 
                 // Scroll to the bottom of the players layout
@@ -129,11 +135,20 @@ public class ClasificacionActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 mp.start();
-                Intent intent = new Intent(ClasificacionActivity.this, DiceActivity.class);
-                intent.putStringArrayListExtra("selectedPlayers", selectedPlayers);
-                startActivity(intent);
-                finish();
+                if (winCondition) {
+                    Intent intent = new Intent(ClasificacionActivity.this, VictoryActivity.class);
+                    intent.putExtra("winningPlayer", winnningPlayer);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Intent intent = new Intent(ClasificacionActivity.this, DiceActivity.class);
+                    intent.putStringArrayListExtra("selectedPlayers", selectedPlayers);
+                    startActivity(intent);
+                    finish();
+                }
 
             }
         });
