@@ -38,6 +38,7 @@ public class ClasificacionActivity extends AppCompatActivity {
     private ArrayList<String> currentPlayerData;
     private Boolean winCondition = false;
     private String winnningPlayer;
+    Boolean dadoValue;
 
 
     @Override
@@ -131,6 +132,32 @@ public class ClasificacionActivity extends AppCompatActivity {
                 // Handle possible errors
             }
         });
+
+
+        // Obtain a reference to the "dado" node in the Firebase Realtime Database
+        DatabaseReference dadoRef = FirebaseDatabase.getInstance().getReference().child("dado");
+
+// Add a ValueEventListener to listen for changes to the "dado" node
+        dadoRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Get the value of the "dado" node as a boolean
+                dadoValue = dataSnapshot.getValue(Boolean.class);
+
+                // Do something with the retrieved value
+                // For example, print it to the console
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle any errors that occur
+
+            }
+        });
+
+
+
         nextButton = findViewById(R.id.btn_continue);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,10 +171,18 @@ public class ClasificacionActivity extends AppCompatActivity {
                     finish();
                 }
                 else {
-                    Intent intent = new Intent(ClasificacionActivity.this, DiceActivity.class);
-                    intent.putStringArrayListExtra("selectedPlayers", selectedPlayers);
-                    startActivity(intent);
-                    finish();
+                    if (dadoValue) {
+                        Intent intent = new Intent(ClasificacionActivity.this, DiceSensorActivity.class);
+                        intent.putStringArrayListExtra("selectedPlayers", selectedPlayers);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else {
+                        Intent intent = new Intent(ClasificacionActivity.this, DiceActivity.class);
+                        intent.putStringArrayListExtra("selectedPlayers", selectedPlayers);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
 
             }
