@@ -8,6 +8,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -44,6 +45,8 @@ public class VictoryActivity extends AppCompatActivity {
         LinearLayout layoutVictoria = findViewById(R.id.layout_victory);
         TextView winner = new TextView(VictoryActivity.this);
         winner.setText(winningPlayer);
+        winner.setGravity(Gravity.CENTER);
+        winner.setTextSize(24);
         layoutVictoria.addView(winner,1);
 
         nextButton = findViewById(R.id.btn_continue);

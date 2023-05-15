@@ -37,7 +37,6 @@ public class DiceActivity extends AppCompatActivity {
         mpClick = MediaPlayer.create(this, R.raw.click_sound);
         mpDice = MediaPlayer.create(this, R.raw.dice_sound);
         rollDice();
-
         pressed = false;
         currentPlayerTextView = findViewById(R.id.current_player);
         //pilla los selectedPlayers
@@ -83,8 +82,9 @@ public class DiceActivity extends AppCompatActivity {
         rollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view){
-                mpDice.start();
+
                 if(!pressed) {
+                    mpDice.start();
                     rollDice();
                     pressed = true;
                     nextButton.setVisibility(View.VISIBLE); // make the button visible

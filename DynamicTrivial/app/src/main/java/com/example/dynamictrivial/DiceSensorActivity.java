@@ -11,8 +11,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +28,15 @@ import java.util.Random;
 
 public class DiceSensorActivity extends AppCompatActivity implements SensorEventListener {
 
+    TextView currentPlayerTextView;
     ImageView diceImg;
     Button rollButton;
     Button nextButton;
     Boolean pressed;
+    List<String> selectedPlayers;
     MediaPlayer mpClick;
     MediaPlayer mpDice;
-    List<String> selectedPlayers;
 
-    //private MediaPlayer mediaPlayer;
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -44,47 +50,73 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dice_sensor);
-        mpDice= MediaPlayer.create(this, R.raw.dice_sound);
         diceImg = findViewById(R.id.imageDice);
-
+        mpClick = MediaPlayer.create(this, R.raw.click_sound);
+        mpDice = MediaPlayer.create(this, R.raw.dice_sound);
+        rollDice();
+        pressed = false;
+        currentPlayerTextView = findViewById(R.id.current_player);
         //pilla los selectedPlayers
         Intent intent = getIntent();
         selectedPlayers = intent.getStringArrayListExtra("selectedPlayers");
 
-        rollDice();
-        pressed = false;
-        /*mediaPlayer = MediaPlayer.create(this, R.raw.dice_sound);
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        // Get a reference to the "jugadorActual" value in the Firebase database
+        database.getReference("jugadorActual").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.release();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get the current player's ID from the dataSnapshot
+                String currentPlayerId = dataSnapshot.getValue(String.class);
+
+                // Use the current player's ID to retrieve their "nombre" field from the "jugadores" object
+                database.getReference("jugadores/" + currentPlayerId + "/nombre").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Get the current player's name from the dataSnapshot
+                        String currentPlayerName = dataSnapshot.getValue(String.class);
+
+                        // Set the current player's name in the TextView
+                        currentPlayerTextView.setText(currentPlayerName);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Handle database errors here
+                    }
+                });
             }
-        });*/
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle database errors here
+            }
+        });
+
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
-        //rollButton = (Button) findViewById(R.id.roll_button);
+        rollButton = (Button) findViewById(R.id.roll_button);
         rollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mpDice.start();
                 if (!pressed) {
+                    mpDice.start();
                     rollDice();
-                    /*mediaPlayer.start();
-                    mediaPlayer.release();
-                    mediaPlayer = null;*/
                     pressed = true;
+                    nextButton.setVisibility(View.VISIBLE);
                 }
             }
         });
 
-        nextButton = (Button) findViewById(R.id.btn_continue);
+        nextButton = (Button) findViewById(R.id.next_button);
+        nextButton.setVisibility(View.INVISIBLE);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view){
-                mpClick.start();
                 Intent intent = new Intent(DiceSensorActivity.this, DondeCaiActivity.class);
                 intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
                 startActivity(intent);
@@ -97,13 +129,7 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        /*MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.dice_sound);
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.release();
-            }
-        });*/
+
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             long curTime = System.currentTimeMillis();
             if ((curTime - lastUpdate) > 100) {
@@ -118,13 +144,11 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
 
                 if (speed > SHAKE_THRESHOLD) {
                     if (!pressed) {
+                        mpDice.start();
                         rollDice();
-                        /*
-                        mediaPlayer.start();
-                        mediaPlayer.release();
-                        mediaPlayer = null;
-                        */
+
                         pressed = true;
+                        nextButton.setVisibility(View.VISIBLE);
 
                     }
                 }
@@ -144,17 +168,12 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
         super.onPause();
         sensorManager.unregisterListener(this);
 
-        // Release the MediaPlayer object
-        /*if (mediaPlayer != null) {
-            mediaPlayer.release();
-        }*/
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        /*mediaPlayer.release();
-        mediaPlayer = null;*/
+
     }
 
     @Override
@@ -163,16 +182,11 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
-    private int previousDiceValue = -1; // initialize to an impossible value
 
     public void rollDice() {
-        int diceValue;
-        do {
-            diceValue = new Random().nextInt(6) + 1;
-        } while (diceValue == previousDiceValue);
-        previousDiceValue = diceValue;
-
+        int diceValue = new Random().nextInt(6) + 1;
         int res = getResources().getIdentifier("dice" + diceValue, "drawable", "com.example.dynamictrivial");
+
         diceImg.setImageResource(res);
     }
 }
