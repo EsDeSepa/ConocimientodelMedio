@@ -52,8 +52,8 @@ public class ClasificacionActivity extends AppCompatActivity {
 
         LinearLayout layoutResumen = findViewById(R.id.layout_clasificacion);
         DatabaseReference playersRef = FirebaseDatabase.getInstance().getReference().child("jugadores");
-
-        playersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query  patata = playersRef.orderByChild("turno");
+        patata.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 LinearLayout playersLayout = findViewById(R.id.layout_muestraclasif);
