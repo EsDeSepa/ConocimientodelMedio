@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mp = MediaPlayer.create(this, R.raw.click_sound);
-        VideoView videoView = findViewById(R.id.videoView);
+        /*VideoView videoView = findViewById(R.id.videoView);
         String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.inicio_trivial;
         Uri uri = Uri.parse(videoPath);
         videoView.setVideoURI(uri);
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 videoView.start();
             }
         });
-        videoView.start();
+        videoView.start();*/
 
         Button settingsButton = (Button) findViewById(R.id.settings_button);
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         layout.addView(imageView);
 
         TextView textView = new TextView(this);
-        textView.setText("Para jugar a Dynamic Trivial necesitarás:\n\n 1 tablero y tantas fichas de " +
+        textView.setText("Para jugar a Dynamic Trivial necesitarás:\n\n- 1 tablero\n- Tantas fichas de " +
                 "jugadores como jugadores seáis.\n\nLo primero que deberéis hacer es dibujar en el " +
                 "tablero un circuito cíclico, dibujar al menos varias casillas para cada una de las " +
                 "categorías y señalar la casilla inicial.\n\nCada jugador tira el dado y elige la categoría " +

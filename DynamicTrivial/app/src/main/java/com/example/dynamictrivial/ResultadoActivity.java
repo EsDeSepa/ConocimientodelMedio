@@ -7,13 +7,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +54,7 @@ public class ResultadoActivity extends AppCompatActivity {
         if (answer) {
             TextView textView = new TextView(this);
             textView.setText("¡Correcto! Acertaste la pregunta de la categoría " + categoriaMayus);
-            layout.addView(textView,2);
+            layout.addView(textView, 2);
             // Increase points in category
             DatabaseReference currentPlayer = FirebaseDatabase.getInstance().getReference().child("jugadorActual");
             currentPlayer.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -72,22 +75,23 @@ public class ResultadoActivity extends AppCompatActivity {
                             } else {
                             }
                         }
+
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
                             // Handle possible errors
                         }
                     });
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
 
-        }
-        else {
+        } else {
             TextView textView = new TextView(this);
             textView.setText("¡Incorrecto! Fallaste la pregunta de la categoría " + categoriaMayus);
-            layout.addView(textView,2);
+            layout.addView(textView, 2);
         }
     }
 }

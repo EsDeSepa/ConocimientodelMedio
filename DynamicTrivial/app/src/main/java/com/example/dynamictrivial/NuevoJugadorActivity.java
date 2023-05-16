@@ -134,7 +134,7 @@ public class NuevoJugadorActivity extends AppCompatActivity {
                                 intent.putExtra("selectedPlayers", selectedPlayers);
                                 nuevoPlayerEditText.setText("");
                                 Toast.makeText(NuevoJugadorActivity.this, "Jugador añadido", Toast.LENGTH_SHORT).show();
-                            }else {
+                            } else {
                                 // No hay jugadores existentes, crea el nodo "jugadores" y el jugador1
                                 DatabaseReference jugadoresNodeRef = mDatabase.child("jugadores");
                                 jugadoresNodeRef.setValue(true, new DatabaseReference.CompletionListener() {

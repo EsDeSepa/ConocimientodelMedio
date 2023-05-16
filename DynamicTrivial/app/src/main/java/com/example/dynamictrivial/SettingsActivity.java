@@ -11,14 +11,17 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -194,6 +197,7 @@ public class SettingsActivity extends AppCompatActivity {
                                             jugadorRef.child("puntosHistoria").setValue(0);
                                         }
                                     }
+
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
                                         // Manejar el error en caso de que ocurra
@@ -207,6 +211,7 @@ public class SettingsActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         }
+
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                             // Manejar el error en caso de que ocurra

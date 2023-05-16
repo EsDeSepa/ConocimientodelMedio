@@ -13,7 +13,8 @@ public class Pregunta implements Parcelable {
     private List<String> opciones;
     private int respuesta;
 
-    public Pregunta() {}
+    public Pregunta() {
+    }
 
     public Pregunta(String categoria, String pregunta, List<String> opciones, int respuesta) {
         this.categoria = categoria;

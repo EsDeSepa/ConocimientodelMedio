@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class VictoryActivity extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class VictoryActivity extends AppCompatActivity {
         winner.setText(winningPlayer);
         winner.setGravity(Gravity.CENTER);
         winner.setTextSize(28);
-        layoutVictoria.addView(winner,1);
+        layoutVictoria.addView(winner, 1);
 
         nextButton = findViewById(R.id.btn_continue);
         nextButton.setOnClickListener(new View.OnClickListener() {

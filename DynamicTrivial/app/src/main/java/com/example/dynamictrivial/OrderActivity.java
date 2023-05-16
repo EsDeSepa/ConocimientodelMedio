@@ -1,19 +1,25 @@
 package com.example.dynamictrivial;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +38,10 @@ public class OrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = OrderActivity.this.getTheme();
+        theme.resolveAttribute(android.R.attr.textColorPrimary, typedValue, true);
+        int textColorPrimary = typedValue.data;
         btnContinuar = findViewById(R.id.btn_continue);
         btnContinuar.setVisibility(View.INVISIBLE);
         mp = MediaPlayer.create(this, R.raw.click_sound);
@@ -50,6 +60,7 @@ public class OrderActivity extends AppCompatActivity {
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -70,11 +81,15 @@ public class OrderActivity extends AppCompatActivity {
                         jugadores.add(jugadorId);
                         TextView nameView = new TextView(getApplicationContext());
                         nameView.setText(nombre);
+
+                        nameView.setTextColor(textColorPrimary);
+
                         orderLayout.addView(nameView);
-                    }else{
+                    } else {
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -104,8 +119,11 @@ public class OrderActivity extends AppCompatActivity {
                             String nombre = dataSnapshot.child("nombre").getValue(String.class);
                             TextView nameView = new TextView(getApplicationContext());
                             nameView.setText(nombre);
+
+                            nameView.setTextColor(textColorPrimary);
                             orderLayout.addView(nameView);
                         }
+
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                         }
@@ -126,6 +144,7 @@ public class OrderActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         jugadorActual.setValue(jugadores.get(0));
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
@@ -148,6 +167,7 @@ public class OrderActivity extends AppCompatActivity {
                             finish();
                         }
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                     }

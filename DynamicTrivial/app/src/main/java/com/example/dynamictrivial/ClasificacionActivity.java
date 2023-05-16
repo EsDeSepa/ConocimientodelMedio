@@ -13,14 +13,17 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +74,7 @@ public class ClasificacionActivity extends AppCompatActivity {
                     TextView playerTextView = new TextView(ClasificacionActivity.this);
                     playerTextView.setText(playerInfo);
                     playersLayout.addView(playerTextView);
-                    if (puntosArte >= 1 && puntosDeporte >=1 && puntosEntretenimiento >=1 && puntosGeografia >=1 && puntosHistoria>=1) {
+                    if (puntosArte >= 1 && puntosDeporte >= 1 && puntosEntretenimiento >= 1 && puntosGeografia >= 1 && puntosHistoria >= 1) {
                         winCondition = true;
                         winnningPlayer = playerName;
                     }
@@ -79,6 +82,7 @@ public class ClasificacionActivity extends AppCompatActivity {
                 ScrollView playersScrollView = findViewById(R.id.playersScrollView);
                 playersScrollView.post(() -> playersScrollView.fullScroll(ScrollView.FOCUS_DOWN));
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -104,11 +108,13 @@ public class ClasificacionActivity extends AppCompatActivity {
                         String nextPlayer = orderList.get(nextIndex);
                         databaseRef.child("jugadorActual").setValue(nextPlayer);
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -121,6 +127,7 @@ public class ClasificacionActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 dadoValue = dataSnapshot.getValue(Boolean.class);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -136,16 +143,14 @@ public class ClasificacionActivity extends AppCompatActivity {
                     intent.putExtra("winningPlayer", winnningPlayer);
                     startActivity(intent);
                     finish();
-                }
-                else {
+                } else {
                     // Check if sensor is chosen for the dice activity
                     if (dadoValue) {
                         Intent intent = new Intent(ClasificacionActivity.this, DiceSensorActivity.class);
                         intent.putStringArrayListExtra("selectedPlayers", selectedPlayers);
                         startActivity(intent);
                         finish();
-                    }
-                    else {
+                    } else {
                         Intent intent = new Intent(ClasificacionActivity.this, DiceActivity.class);
                         intent.putStringArrayListExtra("selectedPlayers", selectedPlayers);
                         startActivity(intent);

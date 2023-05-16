@@ -12,11 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -64,11 +67,13 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
                         String currentPlayerName = dataSnapshot.getValue(String.class);
                         currentPlayerTextView.setText(currentPlayerName);
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -97,7 +102,7 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
         nextButton.setVisibility(View.INVISIBLE);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick (View view){
+            public void onClick(View view) {
                 Intent intent = new Intent(DiceSensorActivity.this, DondeCaiActivity.class);
                 intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
                 startActivity(intent);

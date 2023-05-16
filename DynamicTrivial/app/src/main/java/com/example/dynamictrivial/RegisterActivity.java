@@ -22,15 +22,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
-    EditText username_edittext, mail_edittext,password_edittext, password_repeat_edittext;
+    EditText username_edittext, mail_edittext, password_edittext, password_repeat_edittext;
     Button login_button;
     MediaPlayer mp;
     TextView text_view_register;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
     private FirebaseAuth mAuth;
-    String  username, email, password, co_password;
-
+    String username, email, password, co_password;
 
 
     @Override
@@ -120,6 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         }
     }
+
     private boolean validateEmail() {
         email = mail_edittext.getText().toString().trim();
         if (TextUtils.isEmpty(email)) {
@@ -132,6 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         }
     }
+
     private boolean validatePassword() {
         password = password_edittext.getText().toString().trim();
         co_password = password_repeat_edittext.getText().toString().toLowerCase();

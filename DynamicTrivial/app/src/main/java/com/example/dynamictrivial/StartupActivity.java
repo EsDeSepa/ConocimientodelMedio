@@ -19,7 +19,7 @@ public class StartupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startup);
         mp = MediaPlayer.create(this, R.raw.click_sound);
-        VideoView videoView = findViewById(R.id.videoView);
+        /*VideoView videoView = findViewById(R.id.videoView);
         String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.inicio_trivial;
         Uri uri = Uri.parse(videoPath);
         videoView.setVideoURI(uri);
@@ -29,7 +29,7 @@ public class StartupActivity extends AppCompatActivity {
                 videoView.start();
             }
         });
-        videoView.start();
+        videoView.start();*/
 
         Button startButton = (Button) findViewById(R.id.start_button);
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -37,6 +37,16 @@ public class StartupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mp.start();
                 Intent intent = new Intent(StartupActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button mainButton = (Button) findViewById(R.id.main_button);
+        mainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mp.start();
+                Intent intent = new Intent(StartupActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
