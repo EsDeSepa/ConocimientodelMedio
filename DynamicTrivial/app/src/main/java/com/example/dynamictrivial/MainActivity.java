@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         layout.setOrientation(LinearLayout.VERTICAL);
 
         ImageView imageView = new ImageView(this);
-        imageView.setImageResource(R.drawable.dice1);
+        imageView.setImageResource(R.drawable.tablero);
         // Ajustar el tamaño de la imagen
         LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
