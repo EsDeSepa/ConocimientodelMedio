@@ -3,6 +3,7 @@ package com.example.dynamictrivial;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -37,12 +38,15 @@ public class PreguntaActivity extends AppCompatActivity {
     private List<String> opciones;
     private int respuesta;
 
+    private CountDownTimer countDownTimer;
+    private TextView tvTemporizador;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pregunta);
         mp = MediaPlayer.create(this, R.raw.click_sound);
-
+        tvTemporizador = findViewById(R.id.tv_temporizador);
         // Obtener los datos de la pregunta seleccionada
         Intent intent = getIntent();
         selectedPlayers = intent.getStringArrayListExtra("selectedPlayers");
@@ -63,6 +67,36 @@ public class PreguntaActivity extends AppCompatActivity {
             radioButton.setText(opciones.get(i));
             radioGroupOpciones.addView(radioButton);
         }
+
+        // Establece la duración total del temporizador en milisegundos (20 segundos)
+        long totalDuracionTemporizador = 20 * 1000;
+        // Establece el intervalo en milisegundos en el que se actualizará el temporizador (cada segundo)
+        long intervaloTemporizador = 1000;
+
+        countDownTimer = new CountDownTimer(totalDuracionTemporizador, intervaloTemporizador) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                // Actualiza el texto del temporizador con el tiempo restante en segundos
+                int segundosRestantes = (int) (millisUntilFinished / 1000);
+                tvTemporizador.setText(String.valueOf(segundosRestantes));
+            }
+            @Override
+            public void onFinish() {
+                // Acciones a realizar cuando el temporizador llega a cero
+                // Si no es la respuesta correcta, mostrar un mensaje y lanzar una nueva actividad con la respuesta falsa
+                Toast.makeText(PreguntaActivity.this, "Respuesta incorrecta, intenta de nuevo", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(PreguntaActivity.this, ResultadoActivity.class);
+                intent.putExtra("answer", false);
+                intent.putExtra("cat",cat);
+                intent.putExtra("selectedPlayers", (ArrayList<String>) selectedPlayers);
+                //pasar jugador
+                startActivity(intent);
+                finish();
+            }
+        };
+
+        // Inicia el temporizador
+        countDownTimer.start();
 
         // Definir el comportamiento del botón de responder
         btnResponder.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +135,14 @@ public class PreguntaActivity extends AppCompatActivity {
             }
             //}
         });
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Detiene el temporizador si está en curso
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
     }
 }
 
