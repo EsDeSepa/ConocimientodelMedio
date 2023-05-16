@@ -77,18 +77,17 @@ public class RegisterActivity extends AppCompatActivity {
                                                 addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
-                                                        Toast.makeText(RegisterActivity.this, "Successful Registered", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(RegisterActivity.this, "Registro completado con éxito", Toast.LENGTH_SHORT).show();
                                                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                                         startActivity(intent);
                                                         finish();
                                                     }
                                                 });
                                     } else {
-                                        Toast.makeText(RegisterActivity.this, "Check Email id or Password", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegisterActivity.this, "Comprueba el email o la contraseña", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
-
                 }
             }
 
@@ -107,13 +106,12 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     private boolean validateUsername() {
         username = username_edittext.getText().toString().trim();
         if (TextUtils.isEmpty(username)) {
-            Toast.makeText(RegisterActivity.this, "Enter Your User Name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, "Introduce tu usuario", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             return true;
@@ -123,10 +121,10 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean validateEmail() {
         email = mail_edittext.getText().toString().trim();
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(RegisterActivity.this, "Enter Your Email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, "Introduce tu email", Toast.LENGTH_SHORT).show();
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(RegisterActivity.this, "Please enter valid Email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, "Por favor introduce un email válido", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             return true;
@@ -137,13 +135,13 @@ public class RegisterActivity extends AppCompatActivity {
         password = password_edittext.getText().toString().trim();
         co_password = password_repeat_edittext.getText().toString().toLowerCase();
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(RegisterActivity.this, "Enter Your Password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, "Introduce tu contraseña", Toast.LENGTH_SHORT).show();
             return false;
         } else if (TextUtils.isEmpty(co_password)) {
-            Toast.makeText(RegisterActivity.this, "Enter Your Co-Password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, "Repite la contraseña", Toast.LENGTH_SHORT).show();
             return false;
         } else if (password.length() == 6) {
-            Toast.makeText(RegisterActivity.this, "Password is Very Short", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, "La contraseña es demasiado corta", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             return true;

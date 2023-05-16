@@ -47,12 +47,12 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "Fallo al iniciar sesión", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
@@ -75,10 +75,10 @@ public class LoginActivity extends AppCompatActivity {
     private boolean validateEmail() {
         loginemail = txtemail.getText().toString().trim();
         if (TextUtils.isEmpty(loginemail)) {
-            Toast.makeText(LoginActivity.this, "Enter Your Email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Introduce tu email", Toast.LENGTH_SHORT).show();
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(loginemail).matches()) {
-            Toast.makeText(LoginActivity.this, "Please enter valid Email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Por favor introduzca un email válido", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             return true;
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean validatePassword() {
         loginpassword = txtpassoword.getText().toString().trim();
         if (TextUtils.isEmpty(loginpassword)) {
-            Toast.makeText(LoginActivity.this, "Enter Your Password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Introduce la contraseña", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             return true;
