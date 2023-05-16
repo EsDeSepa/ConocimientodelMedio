@@ -53,7 +53,7 @@ public class ResultadoActivity extends AppCompatActivity {
         boolean answer = intent.getBooleanExtra("answer", false);
         if (answer) {
             TextView title = findViewById(R.id.tv_respuesta);
-            title.setText("¡Respuesta Incorrecta!");
+            title.setText("¡Respuesta Correcta!");
             TextView textView = new TextView(this);
             textView.setText("Acertaste la pregunta de la categoría " + categoriaMayus);
             layout.addView(textView, 2);

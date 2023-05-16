@@ -41,7 +41,7 @@ public class StartupActivity extends AppCompatActivity {
             }
         });
 
-        Button mainButton = (Button) findViewById(R.id.main_button);
+        /*Button mainButton = (Button) findViewById(R.id.main_button);
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +49,6 @@ public class StartupActivity extends AppCompatActivity {
                 Intent intent = new Intent(StartupActivity.this, MainActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 }

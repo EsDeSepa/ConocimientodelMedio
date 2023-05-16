@@ -8,6 +8,7 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="customColor">@color/grey</item>
         <item name="customColorIcon">@color/white</item>
+        <item name="buttonText">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>

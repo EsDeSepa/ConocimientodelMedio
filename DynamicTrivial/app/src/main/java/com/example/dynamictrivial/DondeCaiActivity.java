@@ -1,8 +1,10 @@
 package com.example.dynamictrivial;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -31,10 +33,12 @@ public class DondeCaiActivity extends AppCompatActivity {
     MediaPlayer mp;
     List<String> selectedPlayers;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.donde_cai);
+
         mp = MediaPlayer.create(this, R.raw.click_sound);
         /*VideoView videoView = findViewById(R.id.videoView);
         String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.inicio_trivial;
@@ -71,12 +75,17 @@ public class DondeCaiActivity extends AppCompatActivity {
         LinearLayout buttonsLayout = findViewById(R.id.buttons_layout);
         //buttonsLayout.removeAllViews();
         int marginBetweenButtons = getResources().getDimensionPixelSize(R.dimen.margin_between_buttons);
+        /*TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = DondeCaiActivity.this.getTheme();
+        theme.resolveAttribute(R.attr.buttonText, typedValue, true);
+        int textColorOnPrimary = typedValue.data;
+        int textColorPrimary = typedValue.data;*/
         for (final String categoria : categoriasList) {
             Button button = new Button(this);
             button.setText(categoria);
             button.setBackgroundColor(ContextCompat.getColor(DondeCaiActivity.this, R.color.purple_700));
             //button.setBackgroundResource(R.drawable.button_background);
-            //button.setTextColor(ContextCompat.getColor(DondeCaiActivity.this, R.color.white));
+            button.setTextColor(ContextCompat.getColor(DondeCaiActivity.this, R.color.white));
             //button.setTextAppearance(this, android.R.style.Widget_Button);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
