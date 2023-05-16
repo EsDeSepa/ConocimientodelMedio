@@ -52,8 +52,10 @@ public class ResultadoActivity extends AppCompatActivity {
 
         boolean answer = intent.getBooleanExtra("answer", false);
         if (answer) {
+            TextView title = findViewById(R.id.tv_respuesta);
+            title.setText("¡Respuesta Incorrecta!");
             TextView textView = new TextView(this);
-            textView.setText("¡Correcto! Acertaste la pregunta de la categoría " + categoriaMayus);
+            textView.setText("Acertaste la pregunta de la categoría " + categoriaMayus);
             layout.addView(textView, 2);
             // Increase points in category
             DatabaseReference currentPlayer = FirebaseDatabase.getInstance().getReference().child("jugadorActual");
@@ -89,8 +91,10 @@ public class ResultadoActivity extends AppCompatActivity {
             });
 
         } else {
+            TextView title = findViewById(R.id.tv_respuesta);
+            title.setText("¡Respuesta Incorrecta!");
             TextView textView = new TextView(this);
-            textView.setText("¡Incorrecto! Fallaste la pregunta de la categoría " + categoriaMayus);
+            textView.setText("Fallaste la pregunta de la categoría " + categoriaMayus);
             layout.addView(textView, 2);
         }
     }

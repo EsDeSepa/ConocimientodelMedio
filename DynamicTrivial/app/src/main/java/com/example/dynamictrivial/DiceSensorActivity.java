@@ -93,6 +93,7 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
                     rollDice();
                     pressed = true;
                     nextButton.setVisibility(View.VISIBLE);
+                    rollButton.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -132,6 +133,7 @@ public class DiceSensorActivity extends AppCompatActivity implements SensorEvent
                         rollDice();
                         pressed = true;
                         nextButton.setVisibility(View.VISIBLE);
+                        rollButton.setVisibility(View.INVISIBLE);
                     }
                 }
                 last_x = x;

@@ -94,7 +94,6 @@ public class OrderActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
         Button shuffleButton = (Button) findViewById(R.id.shuffle_button);
         shuffleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,11 +118,9 @@ public class OrderActivity extends AppCompatActivity {
                             String nombre = dataSnapshot.child("nombre").getValue(String.class);
                             TextView nameView = new TextView(getApplicationContext());
                             nameView.setText(nombre);
-
                             nameView.setTextColor(textColorPrimary);
                             orderLayout.addView(nameView);
                         }
-
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                         }
