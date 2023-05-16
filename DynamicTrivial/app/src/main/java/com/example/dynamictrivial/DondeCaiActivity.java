@@ -73,20 +73,12 @@ public class DondeCaiActivity extends AppCompatActivity {
 
     private void createButtons() {
         LinearLayout buttonsLayout = findViewById(R.id.buttons_layout);
-        //buttonsLayout.removeAllViews();
         int marginBetweenButtons = getResources().getDimensionPixelSize(R.dimen.margin_between_buttons);
-        /*TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = DondeCaiActivity.this.getTheme();
-        theme.resolveAttribute(R.attr.buttonText, typedValue, true);
-        int textColorOnPrimary = typedValue.data;
-        int textColorPrimary = typedValue.data;*/
         for (final String categoria : categoriasList) {
             Button button = new Button(this);
             button.setText(categoria);
             button.setBackgroundColor(ContextCompat.getColor(DondeCaiActivity.this, R.color.purple_700));
-            //button.setBackgroundResource(R.drawable.button_background);
             button.setTextColor(ContextCompat.getColor(DondeCaiActivity.this, R.color.white));
-            //button.setTextAppearance(this, android.R.style.Widget_Button);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT

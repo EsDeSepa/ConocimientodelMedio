@@ -29,20 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mp = MediaPlayer.create(this, R.raw.click_sound);
-        /*VideoView videoView = findViewById(R.id.videoView);
-        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.inicio_trivial;
-        Uri uri = Uri.parse(videoPath);
-        videoView.setVideoURI(uri);
-        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                videoView.start();
-            }
-        });
-        videoView.start();*/
-
         Button settingsButton = (Button) findViewById(R.id.settings_button);
         settingsButton.setOnClickListener(new View.OnClickListener() {
 
@@ -56,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mButtonShowPopup = findViewById(R.id.button_show_popup);
-
-
         mButtonShowPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,10 +92,8 @@ public class MainActivity extends AppCompatActivity {
         textView.setTextSize(textSizeInSp);
         textView.setPadding(marginInPixels, marginInPixels, marginInPixels, marginInPixels);
         layout.addView(textView);
-
         scrollView.addView(layout);
         builder.setView(scrollView);
-
         builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
